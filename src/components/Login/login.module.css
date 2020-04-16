@@ -1,0 +1,9 @@
+.logincard{
+    width: 30vw;
+}
+@media only screen and (max-width: 900px) {
+    .logincard{
+
+        width: 100%;
+    }
+}
