@@ -6,23 +6,14 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
-import axios from "axios";
-import domainurl from "../../../Common/Domain";
+
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 function LastTen({data}) {
- // const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${domainurl}/api/v1/previous-notice-list`)
-  //     .then((res) => {
-  //       console.log(res);
-  //       if(res.status===200)
-  //       setData(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+
 
   function converter(date) {
     let d = new Date(date);
@@ -30,8 +21,39 @@ function LastTen({data}) {
   }
   return (
     <>
-      <Loader active={data.length===0}>
-        <Typography color="textSecondary" gutterBottom>
+      
+      <ExpansionPanel>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography color="textSecondary" gutterBottom>
+          Last Ten Notices
+        </Typography>
+        </ExpansionPanelSummary>
+        <Loader active={data.length===0}>
+        <ExpansionPanelDetails>
+        <List>
+          {data.map((item) => (
+            <ListItem key={item.id} className="p-0">
+              <ListItemIcon  style={{ color: "blueviolet",minWidth:'40px' }}>
+                <RadioButtonUncheckedIcon
+                  fontSize={"small"}
+                 
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={item.notice_list.notice}
+                secondary={converter(item.notice_list.date)}
+              ></ListItemText>
+            </ListItem>
+          ))}
+        </List>
+        </ExpansionPanelDetails>
+        </Loader>
+        </ExpansionPanel>
+        {/* <Typography color="textSecondary" gutterBottom>
           Last Ten Notices
         </Typography>
         <List>
@@ -49,8 +71,8 @@ function LastTen({data}) {
               ></ListItemText>
             </ListItem>
           ))}
-        </List>
-      </Loader>
+        </List> */}
+     
     </>
   );
 }

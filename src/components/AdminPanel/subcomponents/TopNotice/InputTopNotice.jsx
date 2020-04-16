@@ -17,10 +17,12 @@ function InputTopNotice({ style,refresh }) {
     }
     setActive(true);
     console.log("update called");
+    
     axios({
       url: `${domainurl}/api/v1/upper-notice`,
       method: "post",
       headers: {
+        Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
         Accept: "application/json",
         "Content-Type": "application/json",
       },

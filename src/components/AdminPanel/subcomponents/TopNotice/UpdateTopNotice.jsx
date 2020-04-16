@@ -1,9 +1,8 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import InputTopNotice from "./InputTopNotice";
 import CurrentTopNotice from "./CurrentTopNotice";
 import LastTen from "./LastTen";
-import Divider from "@material-ui/core/Divider";
+
 import HeadingCard from "../../../Common/HeadingCard";
 import Fade from "@material-ui/core/Fade";
 import { useHistory } from "react-router-dom";
@@ -35,7 +34,7 @@ function UpdateTopNotice() {
           showinput={showinput}
           refresh={refresh}
         />
-        <Divider className="my-4" />
+
         <LastTen data={lastTen} />
       </div>
     </div>

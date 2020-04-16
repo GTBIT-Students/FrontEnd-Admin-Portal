@@ -17,8 +17,13 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
   function handleDelete() {
     console.log("inside del");
     setLoader(true);
+    const options={
+      headers:{
+        Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
+      }
+    }
     axios
-      .delete(`${domainurl}/api/v1/upper-notice`)
+      .delete(`${domainurl}/api/v1/upper-notice`,options)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
@@ -36,8 +41,13 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
       .catch((err) => console.log(err));
   }
   useEffect(() => {
+    const options={
+      headers:{
+        Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
+      }
+    }
     axios
-      .get(`${domainurl}/api/v1/upper-notice`)
+      .get(`${domainurl}/api/v1/upper-notice`,options)
       .then((res) => {
         console.log(res);
         console.log(res.data.current_notice[0].notice);
