@@ -10,6 +10,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import UpdateIcon from "@material-ui/icons/Update";
 import CancelIcon from "@material-ui/icons/Cancel";
 import swalAlert from "../../../Common/SwalAlert";
+import {AxiosGet} from '../../../Common/Axios'
 
 function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
   const [notice, SetNotice] = useState();
