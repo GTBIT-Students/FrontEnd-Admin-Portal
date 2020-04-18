@@ -1,38 +1,28 @@
 import React, { useState, useEffect } from "react";
-import style from './login.module.css'
-import { Card, Row, Col, Container, Dropdown } from "react-bootstrap";
-import Logo from "../../Image/GTBITlogo.png";
+import style from "./login.module.css";
+import { Card, Row, Col, Container } from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import SendIcon from "@material-ui/icons/Send";
 import Button from "@material-ui/core/Button";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { AxiosPost } from "../Common/Axios";
+import { EncryptToken } from "../Common/Encrypt";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Loader from "../Common/Loader";
+
+
 function Login() {
   const [data, setData] = useState({
     username: "",
     password: "",
-    checked: false
+    checked: false,
   });
-  const [type, setType] = useState();
-  const [open, setOpen] = React.useState(false);
-  const handleType = event => {
-    setType(event.target.value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
+const [loading,setLoading]=useState(false)
+  let history = useHistory();
 
   function handleChange(e) {
     let name = e.target.name;
@@ -44,39 +34,35 @@ function Login() {
   }
   function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true)
     console.log("Login submit called");
+    let body = { ...data, checked: undefined };
+
+    async function handleSuccess(res) {
+      //console.log(res);
+      if (res.data.token) {
+        let encryptedToken = await EncryptToken(res.data.token);
+       // console.log(encryptedToken);
+        document.cookie = `token=${encryptedToken};`;
+        history.push("/admin");
+        setLoading(false)
+      }
+    }
+    AxiosPost("/api/v1/token/authorize", body, handleSuccess);
   }
   return (
+    <Loader active={loading}>
     <Container>
       <Row>
         <Col>
-          <Card className={"mx-auto "+style.logincard}>
+          <Card className={"mx-auto " + style.logincard}>
             {/* <Card.Img variant="top" src={Logo} /> */}
             <Card.Header bg="info" className="text-center">
-              Login <AccountCircleIcon/>
+              <span style={{ fontSize: "1.5rem" }}>Login</span>
+              {/* <AccountCircleIcon style={{fontSize:'2rem'}}/> */}
             </Card.Header>
             <Card.Body>
-              <form  autoComplete="off" onSubmit={handleSubmit}>
-                <FormControl className="mb-3" fullWidth>
-                  <InputLabel id="demo-controlled-open-select-label">
-                    Signing as
-                  </InputLabel>
-                  <Select
-                    labelId="demo-controlled-open-select-label"
-                    id="demo-controlled-open-select"
-                    open={open}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    value={type}
-                    onChange={handleType}
-                    required
-                  >
-                    <MenuItem value={""} disabled={true}> Signing as</MenuItem>
-                    <MenuItem value={"teacher"}>Teacher</MenuItem>
-                    <MenuItem value={"student"}>Student</MenuItem>
-                  </Select>
-                </FormControl>
-
+              <form autoComplete="off" onSubmit={handleSubmit}>
                 <TextField
                   fullWidth
                   id="outlined-basic"
@@ -136,6 +122,7 @@ function Login() {
         </Col>
       </Row>
     </Container>
+    </Loader>
   );
 }
 
