@@ -10,7 +10,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import UpdateIcon from "@material-ui/icons/Update";
 import CancelIcon from "@material-ui/icons/Cancel";
 import swalAlert from "../../../Common/SwalAlert";
-import {AxiosGet} from '../../../Common/Axios'
+import {AxiosGet,AxiosDelete} from '../../../Common/Axios'
+
 
 function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
   const [notice, SetNotice] = useState();
@@ -18,53 +19,57 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
   function handleDelete() {
     console.log("inside del");
     setLoader(true);
-    const options={
-      headers:{
-        Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
-      }
+    
+    function handleSuccess(res){
+      console.log(res);
+      setLoader(false);
+      swalAlert(
+        "Successfully Deleted",
+        undefined,
+        "success",
+        undefined,
+        refresh,
+        refresh
+      );
     }
-    axios
-      .delete(`${domainurl}/api/v1/upper-notice`,options)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          setLoader(false);
-          swalAlert(
-            "Successfully Deleted",
-            undefined,
-            "success",
-            undefined,
-            refresh,
-            refresh
-          );
-        }
-      })
-      .catch((err) => console.log(err));
+    AxiosDelete('/api/v1/upper-notice',handleSuccess)
+    // const options={
+    //   headers:{
+    //     Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
+    //   }
+    // }
+    // axios
+    //   .delete(`${domainurl}/api/v1/upper-notice`,options)
+    //   .then((res) => {
+    //     console.log(res);
+    //     if (res.status === 200) {
+         
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
   }
   useEffect(() => {
+    
     const options={
       headers:{
         Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
       }
     }
-    axios
-      .get(`${domainurl}/api/v1/upper-notice`,options)
-      .then((res) => {
-        console.log(res);
-        console.log(res.data.current_notice[0].notice);
-        let resNotice = res.data.current_notice[0].notice;
-        if (res.status === 200) {
-          if (resNotice === null || resNotice === "")
-            //text inside setNotice is used down as cond for delete button
-            SetNotice("* No Current Top Notice,Please Update one *");
-          else SetNotice(resNotice);
-          setLoader(false);
-        }
-        setLastTen(res.data.previous_notice);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    function handleSuccess(res){
+      console.log(res);
+      console.log(res.data.current_notice[0].notice);
+      let resNotice = res.data.current_notice[0].notice;
+      if (res.status === 200) {
+        if (resNotice === null || resNotice === "")
+          //text inside setNotice is used down as cond for delete button
+          SetNotice("* No Current Top Notice,Please Update one *");
+        else SetNotice(resNotice);
+        setLoader(false);
+      }
+      setLastTen(res.data.previous_notice);
+    }
+    AxiosGet('/api/v1/upper-notice',handleSuccess)
+    
   }, []);
   return (
     <div className="my-3">

@@ -6,6 +6,7 @@ import Loader from "../../../Common/Loader";
 import domainurl from "../../../Common/Domain";
 import swalAlert from '../../../Common/SwalAlert'
 import Divider from "@material-ui/core/Divider";
+import {AxiosPost} from '../../../Common/Axios'
 
 function InputTopNotice({ style,refresh }) {
   const [val, setVal] = useState();
@@ -17,30 +18,15 @@ function InputTopNotice({ style,refresh }) {
       return;
     }
     setActive(true);
-    console.log("update called");
     
-    axios({
-      url: `${domainurl}/api/v1/upper-notice`,
-      method: "post",
-      headers: {
-        Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      data: {
-        notice: val,
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-        
-          setActive(false);
-          setVal("");
-          swalAlert('Sucessfully Updated',undefined,'success',undefined,refresh)
-        }
-      })
-      .catch((err) => console.log(err));
+    function handleSuccess(res){
+      console.log(res);
+      setActive(false);
+      setVal("");
+      swalAlert('Sucessfully Updated',undefined,'success',undefined,refresh)
+    }
+    AxiosPost('/api/v1/upper-notice',{notice:val},handleSuccess)
+    
   };
 
   return (
