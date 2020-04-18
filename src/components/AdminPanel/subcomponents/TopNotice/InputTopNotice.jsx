@@ -5,6 +5,7 @@ import axios from "axios";
 import Loader from "../../../Common/Loader";
 import domainurl from "../../../Common/Domain";
 import swalAlert from '../../../Common/SwalAlert'
+import Divider from "@material-ui/core/Divider";
 
 function InputTopNotice({ style,refresh }) {
   const [val, setVal] = useState();
@@ -43,6 +44,7 @@ function InputTopNotice({ style,refresh }) {
   };
 
   return (
+    <>
     <div className="my-5" style={style}>
       <Loader active={active}>
         <TextField
@@ -66,7 +68,10 @@ function InputTopNotice({ style,refresh }) {
           </Button>
         </div>
       </Loader>
+      
     </div>
+      <Divider/>
+    </>
   );
 }
 

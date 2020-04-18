@@ -103,7 +103,7 @@ function SideBar() {
           color="inherit"
           className="pr-2"
         >
-        <MoreIcon/>
+          <MoreIcon />
           {/* <Avatar alt="Profile pic" src={AdminProfile} /> */}
           {/* <AccountCircle /> */}
         </IconButton>
