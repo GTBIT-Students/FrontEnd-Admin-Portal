@@ -59,7 +59,7 @@ function AxiosDelete(endpoint, handleSuccess, handleErr) {
       if (res.status === 200) handleSuccess(res);
     })
     .catch((err) => {
-      PNotify(); //shows error alert
+      
       handleErr(err);
       console.log(err);
     });
