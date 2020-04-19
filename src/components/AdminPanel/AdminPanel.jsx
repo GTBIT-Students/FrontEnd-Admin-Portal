@@ -56,7 +56,7 @@ function AdminPanel(props) {
   console.log(path, url);
   return (
     <Router>
-      <StylesProvider injectFirst>
+      {/* <StylesProvider injectFirst> */}
         <div className={classes.root}>
           <CssBaseline />
           {/* <SideBar /> */}
@@ -109,7 +109,7 @@ function AdminPanel(props) {
           ))} */}
           </main>
         </div>
-      </StylesProvider>
+      {/* </StylesProvider> */}
     </Router>
   );
 }
