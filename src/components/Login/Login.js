@@ -44,7 +44,8 @@ const [loading,setLoading]=useState(false)
         let encryptedToken = await EncryptToken(res.data.token);
        // console.log(encryptedToken);
         document.cookie = `token=${encryptedToken};`;
-        history.push("/admin");
+        //history.push("/admin");
+        window.location.pathname='/admin'
         setLoading(false)
       }
     }
