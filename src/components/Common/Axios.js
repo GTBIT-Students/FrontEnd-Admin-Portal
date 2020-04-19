@@ -2,6 +2,7 @@ import axios from "axios";
 import PNotify from "./PNotify";
 import { DecryptToken } from "./Encrypt";
 
+// const domain = "http://127.0.0.1:8000";
 const domain = "https://gtbit-backend.herokuapp.com";
 
 let token, options;
@@ -9,8 +10,7 @@ function getToken() {
   console.log("geting tooken");
   var b = document.cookie.match("(^|[^;]+)\\s*" + "token" + "\\s*=\\s*([^;]+)");
   if (b) {
-    
-    let val=b.pop();
+    let val = b.pop();
 
     token = DecryptToken(val);
     options = {
@@ -28,32 +28,31 @@ function getToken() {
 }
 getToken();
 
-function AxiosGet(endpoint, handleSuccess) {
+function AxiosGet(endpoint, handleSuccess, handleErr) {
   axios
     .get(`${domain}${endpoint}`, options)
     .then((res) => {
       if (res.status === 200) handleSuccess(res);
     })
     .catch((err) => {
-      PNotify(); //shows error alert
+      handleErr(err);
       console.log(err);
     });
 }
 
-function AxiosPost(endpoint, body, handleSuccess) {
-  
+function AxiosPost(endpoint, body, handleSuccess, handleErr) {
   axios
     .post(`${domain}${endpoint}`, body, options)
     .then((res) => {
       if (res.status === 200) handleSuccess(res);
     })
     .catch((err) => {
-      PNotify(); //shows error alert
+      handleErr(err);
       console.log(err);
     });
 }
 
-function AxiosDelete(endpoint, handleSuccess) {
+function AxiosDelete(endpoint, handleSuccess, handleErr) {
   axios
     .delete(`${domain}${endpoint}`, options)
     .then((res) => {
@@ -61,6 +60,7 @@ function AxiosDelete(endpoint, handleSuccess) {
     })
     .catch((err) => {
       PNotify(); //shows error alert
+      handleErr(err);
       console.log(err);
     });
 }

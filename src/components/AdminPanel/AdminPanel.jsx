@@ -2,7 +2,6 @@ import React from "react";
 //Don't remove AppBar
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
 import useStyles from "./AdminPanelStyle";
 import {
   BrowserRouter as Router,
@@ -27,27 +26,49 @@ const cards = [
   {
     heading: "Top Notice",
     bgcolor: "#f44336",
-    icon: <NotificationsIcon className="d-block" style={{ width: "4rem", height: "4rem" }}/>,
+    icon: (
+      <NotificationsIcon
+        className="d-block"
+        style={{ width: "4rem", height: "4rem" }}
+      />
+    ),
   },
   {
     heading: "Carousel",
     bgcolor: "#9575CD",
-    icon: <ViewCarouselIcon className="d-block" style={{ width: "4rem", height: "4rem" }} />,
+    icon: (
+      <ViewCarouselIcon
+        className="d-block"
+        style={{ width: "4rem", height: "4rem" }}
+      />
+    ),
   },
   {
     heading: "Notices/Alerts",
     bgcolor: "#FFB300",
-    icon: <ListAltIcon className="d-block" style={{ width: "4rem", height: "4rem" }}/>,
+    icon: (
+      <ListAltIcon
+        className="d-block"
+        style={{ width: "4rem", height: "4rem" }}
+      />
+    ),
   },
   {
     heading: "Important links",
     bgcolor: "#795548",
-    icon: <LinkIcon className="d-block" style={{ width: "4rem", height: "4rem" }} />,
+    icon: (
+      <LinkIcon className="d-block" style={{ width: "4rem", height: "4rem" }} />
+    ),
   },
   {
     heading: "Events",
     bgcolor: "#424242",
-    icon: <EventIcon className="d-block" style={{ width: "4rem", height: "4rem" }} />,
+    icon: (
+      <EventIcon
+        className="d-block"
+        style={{ width: "4rem", height: "4rem" }}
+      />
+    ),
   },
 ];
 function AdminPanel(props) {
@@ -67,13 +88,12 @@ function AdminPanel(props) {
             <Switch>
               <Route exact path={path}>
                 <Row>
-                  {cards.map((card,index) => (
+                  {cards.map((card) => (
                     <Col
                       xs={"12"}
                       sm={"6"}
                       md={"4"}
-                      
-                      key={index}
+                      key={card}
                       className="my-3"
                     >
                       <DashCard
@@ -89,24 +109,6 @@ function AdminPanel(props) {
                 <AdminRoutes />
               </Route>
             </Switch>
-
-            {/* {[1, 2, 3, 4].map((val) => (
-            <Typography paragraph key={val}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Rhoncus dolor purus non enim praesent elementum facilisis leo vel.
-              Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-              gravida rutrum quisque non tellus. Convallis convallis tellus id
-              interdum velit laoreet id donec ultrices. Odio morbi quis commodo
-              odio aenean sed adipiscing. Amet nisl suscipit adipiscing bibendum
-              est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-              Metus vulputate eu scelerisque felis imperdiet proin fermentum
-              leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt
-              lobortis feugiat vivamus at augue. At augue eget arcu dictum
-              varius duis at consectetur lorem. Velit sed ullamcorper morbi
-              tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-            </Typography>
-          ))} */}
           </main>
         </div>
       </StylesProvider>

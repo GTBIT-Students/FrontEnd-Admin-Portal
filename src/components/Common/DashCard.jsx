@@ -24,7 +24,7 @@ function DashCard({ heading, bgcolor ,icon}) {
           </Row>
           <Row>
             <Col className="d-flex justify-content-center mt-2">
-              <Typography variant="inherit" component="h3">
+              <Typography variant="p" component="h3">
                 {heading}
               </Typography>
             </Col>

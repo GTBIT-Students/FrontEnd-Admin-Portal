@@ -5,7 +5,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import Divider from "@material-ui/core/Divider";
-import MailIcon from "@material-ui/icons/Mail";
 import useStyles from "./AdminPanelStyle";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
@@ -13,7 +12,7 @@ import StarBorder from "@material-ui/icons/StarBorder";
 import Collapse from "@material-ui/core/Collapse";
 import { Link } from "react-router-dom";
 
-function NavItems({click}) {
+function NavItems({ click }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -24,32 +23,32 @@ function NavItems({click}) {
     {
       name: "Dashboard",
       route: "/admin",
-      icon:<InboxIcon />
+      icon: <InboxIcon />,
     },
     {
       name: "Top Notice",
       route: "/admin/UpdateTopNotice",
-      icon:<InboxIcon />
+      icon: <InboxIcon />,
     },
     {
       name: "Carousel",
       route: "/admin/Carousel",
-      icon:<InboxIcon />
+      icon: <InboxIcon />,
     },
     {
       name: "Notice/Alerts",
       route: "/admin/Notices",
-      icon:<InboxIcon />
+      icon: <InboxIcon />,
     },
     {
       name: "Events",
       route: "/admin/Events",
-      icon:<InboxIcon />
+      icon: <InboxIcon />,
     },
     {
       name: "Important Links",
       route: "/admin/ImportantLinks",
-      icon:<InboxIcon />
+      icon: <InboxIcon />,
     },
   ];
   return (
@@ -63,13 +62,16 @@ function NavItems({click}) {
 
       <List>
         {navitems.map((item, index) => (
-          <Link to={item.route} className={classes.hoverlight} key={index} onClick={click}>
-          <ListItem button >
-            <ListItemIcon>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText primary={item.name} />
-          </ListItem>
+          <Link
+            to={item.route}
+            className={classes.hoverlight}
+            key={index}
+            onClick={click}
+          >
+            <ListItem button>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItem>
           </Link>
         ))}
       </List>
@@ -95,7 +97,6 @@ function NavItems({click}) {
       </List>
 
       <Divider />
-   
     </div>
   );
 }

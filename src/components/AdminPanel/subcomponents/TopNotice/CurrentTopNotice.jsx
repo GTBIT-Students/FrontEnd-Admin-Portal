@@ -10,8 +10,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import UpdateIcon from "@material-ui/icons/Update";
 import CancelIcon from "@material-ui/icons/Cancel";
 import swalAlert from "../../../Common/SwalAlert";
-import {AxiosGet,AxiosDelete} from '../../../Common/Axios'
-
+import { AxiosGet, AxiosDelete } from "../../../Common/Axios";
+import swal from "sweetalert";
 
 function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
   const [notice, SetNotice] = useState();
@@ -19,8 +19,8 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
   function handleDelete() {
     console.log("inside del");
     setLoader(true);
-    
-    function handleSuccess(res){
+
+    function handleSuccess(res) {
       console.log(res);
       setLoader(false);
       swalAlert(
@@ -32,7 +32,7 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
         refresh
       );
     }
-    AxiosDelete('/api/v1/upper-notice',handleSuccess)
+    AxiosDelete("/api/v1/upper-notice", handleSuccess);
     // const options={
     //   headers:{
     //     Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
@@ -43,19 +43,18 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
     //   .then((res) => {
     //     console.log(res);
     //     if (res.status === 200) {
-         
+
     //     }
     //   })
     //   .catch((err) => console.log(err));
   }
   useEffect(() => {
-    
-    const options={
-      headers:{
+    const options = {
+      headers: {
         Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
-      }
-    }
-    function handleSuccess(res){
+      },
+    };
+    function handleSuccess(res) {
       console.log(res);
       console.log(res.data.current_notice[0].notice);
       let resNotice = res.data.current_notice[0].notice;
@@ -68,8 +67,14 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
       }
       setLastTen(res.data.previous_notice);
     }
-    AxiosGet('/api/v1/upper-notice',handleSuccess)
-    
+    function handleErr(err) {
+      swal(
+        "Unauthorised Access",
+        "You are not authorised to access this page.",
+        "error"
+      );
+    }
+    AxiosGet("/api/v1/upper-notice", handleSuccess, handleErr);
   }, []);
   return (
     <div className="my-3">
