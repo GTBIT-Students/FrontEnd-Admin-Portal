@@ -19,6 +19,7 @@ import useStyles from "./AdminPanelStyle";
 import NavItems from "./NavItems";
 import AdminProfile from "../../Image/AdminProfile.jpeg";
 import Avatar from "@material-ui/core/Avatar";
+import LogOut from '../Common/LogOut'
 
 function SideBar() {
   const classes = useStyles();
@@ -64,7 +65,7 @@ function SideBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={LogOut}>Log Out</MenuItem>
     </Menu>
   );
 
