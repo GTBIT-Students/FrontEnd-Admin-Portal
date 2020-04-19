@@ -26,37 +26,37 @@ function NavItems({ click }) {
       name: "Dashboard",
       route: "/admin",
       icon: <InboxIcon />,
-      onClick: { click },
+      onClick:  click ,
     },
     {
       name: "Top Notice",
       route: "/admin/UpdateTopNotice",
       icon: <InboxIcon />,
-      onClick: { click },
+      onClick: click ,
     },
     {
       name: "Carousel",
       route: "/admin/Carousel",
       icon: <InboxIcon />,
-      onClick: { click },
+      onClick:  click ,
     },
     {
       name: "Notice/Alerts",
       route: "/admin/Notices",
       icon: <InboxIcon />,
-      onClick: { click },
+      onClick:  click ,
     },
     {
       name: "Events",
       route: "/admin/Events",
       icon: <InboxIcon />,
-      onClick: { click },
+      onClick:  click ,
     },
     {
       name: "Important Links",
       route: "/admin/ImportantLinks",
       icon: <InboxIcon />,
-      onClick: { click },
+      onClick:  click ,
     },
   ];
   return (
@@ -71,7 +71,7 @@ function NavItems({ click }) {
       <List>
         {navitems.map((item, index) => (
           <Link to={item.route} className={classes.hoverlight} key={index}>
-            <ListItem button>
+            <ListItem button onClick={item.onClick}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItem>

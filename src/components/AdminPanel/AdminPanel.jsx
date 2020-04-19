@@ -88,13 +88,13 @@ function AdminPanel(props) {
             <Switch>
               <Route exact path={path}>
                 <Row>
-                  {cards.map((card) => (
+                  {cards.map((card,index) => (
                     <Col
                       xs={"12"}
                       sm={"6"}
                       md={"4"}
-                      key={card}
                       className="my-3"
+                      key={index}
                     >
                       <DashCard
                         heading={card.heading}
