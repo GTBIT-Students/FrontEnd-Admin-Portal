@@ -76,7 +76,7 @@ else
     <div className="mt-4">
       <Loader active={loader}>
         <Typography color="textSecondary" gutterBottom>
-          Current Events
+          Current Important Links
         </Typography>
         <List dense={true}>
           {data.map((item) => (
