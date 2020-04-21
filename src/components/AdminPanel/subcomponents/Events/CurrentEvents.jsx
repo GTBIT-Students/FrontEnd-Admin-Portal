@@ -13,6 +13,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import swal from "../../../Common/SwalAlert";
 import {useHistory} from 'react-router-dom'
+import LastTenEvents from "./LastTenEvents";
+import Divider from "@material-ui/core/Divider";
 
 function CurrentEvents() {
   let history=useHistory();
@@ -21,6 +23,7 @@ function CurrentEvents() {
   const [MoreData, setMoreData] = useState([]);
   const [loader, setLoader] = useState(true);
   const [moreBtn,setMoreBtn]=useState(true)
+  const [lastTenEvents,setLastTen]=useState([])
 
   useEffect(() => {
     function handleSuccess(res) {
@@ -32,6 +35,8 @@ function CurrentEvents() {
         setData(temp);
         setMoreData(res.data.current_event.slice(5));
       } else setData(res.data.current_event);
+
+      setLastTen(res.data.previous_event)
     }
 
     AxiosGet("/api/v1/event-list", handleSuccess, (err) => console.log(err));
@@ -68,7 +73,7 @@ else
     AxiosDelete("/api/v1/event-list", body, handleSuccess, handleErr);
   }
   return (
-    <div>
+    <div className="mt-4">
       <Loader active={loader}>
         <Typography color="textSecondary" gutterBottom>
           Current Events
@@ -109,6 +114,9 @@ else
           )}
         </div>
       </Loader>
+
+     
+      <LastTenEvents data={lastTenEvents} />
     </div>
   );
 }
