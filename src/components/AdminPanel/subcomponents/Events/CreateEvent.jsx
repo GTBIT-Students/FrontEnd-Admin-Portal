@@ -62,7 +62,7 @@ function CreateEvent() {
     AxiosPost("/api/v1/event-list", data, handleSuccess, handleError);
   }
   return (
-    <div>
+    <div className="mt-3">
       {showForm && (
         <Loader active={loader}>
           <div>
@@ -129,9 +129,9 @@ function CreateEvent() {
             <Button
               className="d-block mr-2"
               variant="contained"
-              color="primary"
+              color={!showForm?"primary":"secondary"}
               type="submit"
-              startIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
+              //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
               onClick={()=>setShowForm(!showForm)}
             >
               {!showForm?'Create Event':'Cancel'}

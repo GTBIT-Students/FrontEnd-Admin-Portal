@@ -106,7 +106,7 @@ else
             <Button
               variant="outlined"
               color="primary"
-              className="m-auto d-block"
+              className="m-auto d-block text-info"
               onClick={()=>setMoreBtn(!moreBtn)}
             >
              {moreBtn?"Show More Events":'Show Less Events'}
