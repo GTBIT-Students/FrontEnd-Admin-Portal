@@ -32,7 +32,7 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
         refresh
       );
     }
-    AxiosDelete("/api/v1/upper-notice", handleSuccess);
+    AxiosDelete("/api/v1/upper-notice",{}, handleSuccess);
     // const options={
     //   headers:{
     //     Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",

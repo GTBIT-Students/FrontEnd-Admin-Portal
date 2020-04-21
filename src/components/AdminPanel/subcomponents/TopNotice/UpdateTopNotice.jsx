@@ -1,7 +1,7 @@
 import React from "react";
 import InputTopNotice from "./InputTopNotice";
 import CurrentTopNotice from "./CurrentTopNotice";
-import LastTen from "./LastTen";
+import LastTen from "./LastTenNotices";
 
 import HeadingCard from "../../../Common/HeadingCard";
 import Fade from "@material-ui/core/Fade";

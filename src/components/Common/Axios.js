@@ -52,9 +52,9 @@ function AxiosPost(endpoint, body, handleSuccess, handleErr) {
     });
 }
 
-function AxiosDelete(endpoint, handleSuccess, handleErr) {
+function AxiosDelete(endpoint,body, handleSuccess, handleErr) {
   axios
-    .delete(`${domain}${endpoint}`, options)
+    .delete(`${domain}${endpoint}`,{...options,data:body})
     .then((res) => {
       if (res.status === 200) handleSuccess(res);
     })
