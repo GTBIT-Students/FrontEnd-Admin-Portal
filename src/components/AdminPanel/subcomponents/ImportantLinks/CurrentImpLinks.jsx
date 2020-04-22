@@ -80,8 +80,8 @@ else
         </Typography>
         <List dense={true}>
           {data.map((item) => (
-            <ListItem key={item.id} className="p-0">
-              <ListItemIcon style={{ color: "blueviolet", minWidth: "40px" }}>
+            <ListItem key={item.id} className="pl-0">
+              <ListItemIcon style={{ color: "blueviolet", minWidth: "35px" }}>
                 <RadioButtonUncheckedIcon fontSize={"small"} />
               </ListItemIcon>
               <ListItemText
