@@ -13,7 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 function DashCard({ heading, bgcolor ,icon}) {
   return (
     <>
-      <Card elevation={3} style={{ backgroundColor: '#adb5bd' }}>
+      <Card elevation={3} style={{ backgroundColor: '#17a2b8' }}>
         <CardContent className="pb-0">
           <Row className="justify-content-center">
             <Col className="col-auto p-3 border d-flex align-items-center justify-content-center rounded-circle"
