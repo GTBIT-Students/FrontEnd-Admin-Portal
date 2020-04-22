@@ -9,15 +9,17 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
 import IconButton from "@material-ui/core/IconButton";
+import { Link } from "react-router-dom";
 
-function DashCard({ heading, bgcolor ,icon}) {
+function DashCard({ heading, bgcolor, icon,LinkTo }) {
   return (
     <>
-      <Card elevation={3} style={{ backgroundColor: '#17a2b8' }}>
+      <Card elevation={3} style={{ backgroundColor: "#17a2b8" }}>
         <CardContent className="pb-0">
           <Row className="justify-content-center">
-            <Col className="col-auto p-3 border d-flex align-items-center justify-content-center rounded-circle"
-            style={{ backgroundColor:'#d1e0eefc' }}
+            <Col
+              className="col-auto p-3 border d-flex align-items-center justify-content-center rounded-circle"
+              style={{ backgroundColor: "#d1e0eefc" }}
             >
               {icon}
             </Col>
@@ -31,9 +33,11 @@ function DashCard({ heading, bgcolor ,icon}) {
           </Row>
           <Row className="justify-content-center">
             <Col className="col-auto">
-              <Button>
-                <ArrowForwardIcon style={{ width: "3rem", height: "3rem" }} />
-              </Button>
+              <Link to={`/admin/${LinkTo}`}>
+                <Button>
+                  <ArrowForwardIcon style={{ width: "3rem", height: "3rem" }} />
+                </Button>
+              </Link>
             </Col>
           </Row>
         </CardContent>

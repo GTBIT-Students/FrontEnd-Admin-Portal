@@ -32,6 +32,7 @@ const cards = [
         style={{ width: "4rem", height: "4rem" }}
       />
     ),
+    LinkTo:'UpdateTopNotice'
   },
   {
     heading: "Carousel",
@@ -42,6 +43,7 @@ const cards = [
         style={{ width: "4rem", height: "4rem" }}
       />
     ),
+    LinkTo:"Carousel"
   },
   {
     heading: "Notices/Alerts",
@@ -52,13 +54,15 @@ const cards = [
         style={{ width: "4rem", height: "4rem" }}
       />
     ),
+    LinkTo:"Notices"
   },
   {
-    heading: "Important links",
+    heading: "Important Links",
     bgcolor: "#795548",
     icon: (
       <LinkIcon className="d-block" style={{ width: "4rem", height: "4rem" }} />
     ),
+    LinkTo:"ImportantLinks"
   },
   {
     heading: "Events",
@@ -69,6 +73,7 @@ const cards = [
         style={{ width: "4rem", height: "4rem" }}
       />
     ),
+    LinkTo:"Events"
   },
 ];
 function AdminPanel(props) {
@@ -100,6 +105,7 @@ function AdminPanel(props) {
                         heading={card.heading}
                         bgcolor={card.bgcolor}
                         icon={card.icon}
+                        LinkTo={card.LinkTo}
                       />
                     </Col>
                   ))}
