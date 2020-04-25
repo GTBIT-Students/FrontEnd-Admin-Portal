@@ -24,11 +24,11 @@ const useStyles = makeStyles({
   },
 });
 
-function HeadingCard({ heading }) {
+function HeadingCard({ heading,bgcolor }) {
   const classes = useStyles();
   return (
     <>
-      <Card className={classes.root+' mb-3'}>
+      <Card className={classes.root+' mb-3'} style={{background:bgcolor}}>
         <CardContent className='p-2 text-center'>
           <Typography variant="h4" component="h2" >
             {heading}

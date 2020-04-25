@@ -20,7 +20,7 @@ function UpdateTopNotice() {
   }
   return (
     <div>
-      <HeadingCard heading={"Update Top Notice"} />
+      <HeadingCard heading={"Update Top Notice"} bgcolor={"linear-gradient(-20deg, #2b5876 0%, #4e4376 100%)"}/>
 
       <div>
         {showinput && (
