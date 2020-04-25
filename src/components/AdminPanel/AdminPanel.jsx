@@ -25,7 +25,7 @@ import EventIcon from "@material-ui/icons/Event";
 const cards = [
   {
     heading: "Top Notice",
-    bgcolor: "#f44336",
+    bgcolor: "linear-gradient(-20deg, #2b5876 0%, #4e4376 100%)",
     icon: (
       <NotificationsIcon
         className="d-block"
@@ -36,7 +36,7 @@ const cards = [
   },
   {
     heading: "Carousel",
-    bgcolor: "#9575CD",
+    bgcolor: "radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%)",
     icon: (
       <ViewCarouselIcon
         className="d-block"
@@ -47,7 +47,7 @@ const cards = [
   },
   {
     heading: "Notices/Alerts",
-    bgcolor: "#FFB300",
+    bgcolor: "linear-gradient(to top, #0ba360 0%, #3cba92 100%)",
     icon: (
       <ListAltIcon
         className="d-block"
@@ -58,7 +58,7 @@ const cards = [
   },
   {
     heading: "Important Links",
-    bgcolor: "#795548",
+    bgcolor: "linear-gradient(to right,#fe9365,#feb798)",
     icon: (
       <LinkIcon className="d-block" style={{ width: "4rem", height: "4rem" }} />
     ),
@@ -66,7 +66,7 @@ const cards = [
   },
   {
     heading: "Events",
-    bgcolor: "#424242",
+    bgcolor: "linear-gradient(to right,#fe5d70,#fe909d)",
     icon: (
       <EventIcon
         className="d-block"

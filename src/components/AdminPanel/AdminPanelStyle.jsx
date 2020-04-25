@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   appBar: {
-    background: "#212a2f",
-    color: "#bdbdbd",
+    background: "#f9fbfd",
+    color: "#7c8798",
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
@@ -61,8 +61,9 @@ const useStyles = makeStyles((theme) => ({
 
   search: {
     position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    borderRadius: "60px",
+    backgroundColor: "white",
+    boxShadow:'0 2px 9px 0 rgba(169,184,200,.2)',
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
