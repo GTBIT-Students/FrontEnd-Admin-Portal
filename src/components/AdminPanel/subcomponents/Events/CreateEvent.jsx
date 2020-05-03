@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ClearIcon from '@material-ui/icons/Clear';
 import Icon from '@material-ui/core/Icon';
+import DragAndDrop from '../../../Common/DragAndDrop'
 
 const list = [
   {
@@ -37,7 +38,7 @@ function CreateEvent() {
     event_venue: "",
   });
   const [loader, setLoader] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
 
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -106,6 +107,11 @@ function CreateEvent() {
                     required
                     placeholder="time"
                   />
+                </Col>
+              </Row>
+              <Row className="justify-content-center my-3">
+                <Col sm="10">
+                  <DragAndDrop/>
                 </Col>
               </Row>
               <Row className="justify-content-end mt-2">
