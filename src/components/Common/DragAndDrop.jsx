@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 import "./DragAndDrop.css";
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const DragAndDrop = (props) => {
-  const { data, dispatch } = props;
+  const { handleFileCheck } = props;
   const [inDropZone, setDropZone] = useState(false);
+const [showSuccess,setSuccess]=useState(false)
 
   const handleDragEnter = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setDropZone(true);
-    // dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false })
-    //dispatch({ type: 'SET_DROP_DEPTH', dropDepth: data.dropDepth + 1 });
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setDropZone(false);
-    //dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false })
   };
 
   const handleDragOver = (e) => {
@@ -26,23 +25,23 @@ const DragAndDrop = (props) => {
     e.stopPropagation();
     e.dataTransfer.dropEffect = "copy";
     setDropZone(true);
-    // dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: true });
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    let files = [...e.dataTransfer.files];
-    console.log(files);
-    if (files && files.length > 0) {
-      const existingFiles = data.fileList.map((f) => f.name);
-      files = files.filter((f) => !existingFiles.includes(f.name));
-      setDropZone(false);
-      // dispatch({ type: 'ADD_FILE_TO_LIST', files });
-      // dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
-      //dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
-    }
+    let Newfiles = [...e.dataTransfer.files];
+    console.log("new files", Newfiles);
+    handleFileCheck(Newfiles,setSuccess);
+    // if (Newfiles && Newfiles.length > 0) {
+    //   const existingFiles = files.map((f) => f.name);
+    //   Newfiles = Newfiles.filter((f) => !existingFiles.includes(f.name));
+    //   Newfiles=[...files,...Newfiles]
+    //   console.log('updated files',Newfiles);
+    //   setFiles(Newfiles)
+    //}
+    setDropZone(false);
   };
 
   return (
@@ -55,22 +54,38 @@ const DragAndDrop = (props) => {
       onDragEnter={(e) => handleDragEnter(e)}
       onDragLeave={(e) => handleDragLeave(e)}
     >
-    <div>
-        <CloudUploadIcon style={{fontSize:'5rem'}}/>
-    </div>
+    {!showSuccess?
       <div>
-      <input
-        type="file"
-        id="Dropfile"
-        accept="image/*,.png,.jpg,.jpeg"
-        onChange={(e) => {
-          console.log(e.target.files);
-        }}
-      />
-      
-        <label className="Droplabel" for="Dropfile">Choose a file</label>
-        <span> or Drag file</span>
+        <div>
+          <CloudUploadIcon style={{ fontSize: "5rem" }} />
+        </div>
+        <div>
+          <input
+            type="file"
+            id="Dropfile"
+            accept="image/*,.png,.jpg,.jpeg"
+            onChange={(e) => {
+              handleFileCheck(e.target.files,setSuccess);
+            }}
+          />
+
+          <label className="Droplabel" for="Dropfile">
+            Choose a file
+          </label>
+          <span> or Drag file</span>
+        </div>
       </div>
+    :
+    <div>
+<CheckCircleOutlineIcon style={{ fontSize: "5rem" }}/>
+<div>
+  <span>Successfully Added</span>
+</div>
+<div>
+<button onClick={()=>setSuccess(false)} className="btn btn-secondary btn-sm mt-2">Try again</button>
+</div>
+    </div>
+    }
     </div>
   );
 };

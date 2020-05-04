@@ -39,6 +39,7 @@ function CreateEvent() {
   });
   const [loader, setLoader] = useState(false);
   const [showForm, setShowForm] = useState(true);
+ const [files,setFiles]=useState();
 
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -61,6 +62,15 @@ function CreateEvent() {
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
     AxiosPost("/api/v1/event-list", data, handleSuccess, handleError);
+  }
+
+  function handleFileCheck(NewFiles,setSuccess){
+    setSuccess(true)
+    console.log([...NewFiles]);
+    console.log(NewFiles.length);
+//if(NewFiles && NewFiles.length>0){
+setFiles([...NewFiles])
+//}
   }
   return (
     <div className="mt-3">
@@ -111,7 +121,7 @@ function CreateEvent() {
               </Row>
               <Row className="justify-content-center my-3">
                 <Col sm="10">
-                  <DragAndDrop/>
+                  <DragAndDrop handleFileCheck={handleFileCheck}/>
                 </Col>
               </Row>
               <Row className="justify-content-end mt-2">
