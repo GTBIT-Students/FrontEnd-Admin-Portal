@@ -65,4 +65,17 @@ function AxiosDelete(endpoint,body, handleSuccess, handleErr) {
     });
 }
 
-export { AxiosGet, AxiosPost, AxiosDelete };
+function AxiosPut(endpoint, body, handleSuccess, handleErr) {
+  axios
+    .post(`${domain}${endpoint}`, body, options)
+    .then((res) => {
+      if (res.status === 200) handleSuccess(res);
+    })
+    .catch((err) => {
+      handleErr(err);
+      console.log(err);
+    });
+}
+
+
+export { AxiosGet, AxiosPost, AxiosDelete,AxiosPut };

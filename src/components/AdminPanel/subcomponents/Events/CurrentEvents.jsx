@@ -89,13 +89,16 @@ else
                 secondary={item.event_venue}
               />
               <ListItemSecondaryAction>
-                <IconButton
+                {/* <IconButton
                   edge="end"
                   aria-label="delete"
                   onClick={() => handleDelete(item.id)}
+                  style={{color:'red'}}
                 >
                   <DeleteIcon />
-                </IconButton>
+                </IconButton> */}
+                <button onClick={() => handleDelete(item.id)} className="btn btn-outline-danger p-1 mr-1">Delete</button>
+                <button className="btn btn-outline-info p-1">Update</button>
               </ListItemSecondaryAction>
             </ListItem>
           ))}
