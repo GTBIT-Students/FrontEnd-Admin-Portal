@@ -9,10 +9,10 @@ import { AxiosPost } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import ClearIcon from '@material-ui/icons/Clear';
-import Icon from '@material-ui/core/Icon';
-import DragAndDrop from '../../../Common/DragAndDrop'
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import ClearIcon from "@material-ui/icons/Clear";
+import Icon from "@material-ui/core/Icon";
+import DragAndDrop from "../../../Common/DragAndDrop";
 
 const list = [
   {
@@ -38,8 +38,8 @@ function CreateEvent() {
     event_venue: "",
   });
   const [loader, setLoader] = useState(false);
-  const [showForm, setShowForm] = useState(true);
- const [files,setFiles]=useState();
+  const [showForm, setShowForm] = useState(false);
+  const [files, setFiles] = useState();
 
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -47,7 +47,17 @@ function CreateEvent() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(data);
+    let formdata=new FormData();
+    for(let key in data){
+      console.log(key,data[key]);
+      formdata.append(`${key}`,data[key])
+    }
+    formdata.append("event_date",data.event_date.toISOString().split('T')[0])
+    if(files)
+    formdata.append("image",files)
+    formdata.append("test","test val")
+    console.log(formdata);
+
     setLoader(true);
     function handleSuccess(res) {
       console.log(res);
@@ -61,16 +71,29 @@ function CreateEvent() {
       setLoader(false);
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
-    AxiosPost("/api/v1/event-list", data, handleSuccess, handleError);
+    AxiosPost("/api/v1/event-list", formdata, handleSuccess, handleError);
   }
 
-  function handleFileCheck(NewFiles,setSuccess){
-    setSuccess(true)
+  function handleFileCheck(NewFiles, setSuccess) {
+    if (NewFiles)
+      if (NewFiles.length === 1) {
+        let file = NewFiles[0];
+        console.log(file.type.slice(0,5));
+
+        if (file.type.slice(0,5)!=="image") {
+          swal("File should be image", "Try again", "warning");
+          return;
+        }
+        setFiles(file)
+        setSuccess(true);
+      } else if (NewFiles.length > 1) {
+        swal("Please Select One File", "Try again", "warning");
+      }
     console.log([...NewFiles]);
     console.log(NewFiles.length);
-//if(NewFiles && NewFiles.length>0){
-setFiles([...NewFiles])
-//}
+    //if(NewFiles && NewFiles.length>0){
+    //setFiles([...NewFiles])
+    //}
   }
   return (
     <div className="mt-3">
@@ -121,8 +144,9 @@ setFiles([...NewFiles])
               </Row>
               <Row className="justify-content-center my-3">
                 <Col sm="10">
-                  <DragAndDrop handleFileCheck={handleFileCheck}/>
+                  <DragAndDrop handleFileCheck={handleFileCheck} />
                 </Col>
+                <div className="text-center text-dark">{files && files.name}</div>
               </Row>
               <Row className="justify-content-end mt-2">
                 <Button
@@ -137,23 +161,22 @@ setFiles([...NewFiles])
             </form>
           </div>
         </Loader>
-      ) }
-       
-          <Row className=" mt-3">
-          <Col className="col-auto">
+      )}
 
-            <Button
-              className="d-block mr-2"
-              variant="contained"
-              color={!showForm?"primary":"secondary"}
-              type="submit"
-              //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
-              onClick={()=>setShowForm(!showForm)}
-            >
-              {!showForm?'Create Event':'Cancel'}
-            </Button>
-          </Col>
-          </Row>
+      <Row className=" mt-3">
+        <Col className="col-auto">
+          <Button
+            className="d-block mr-2"
+            variant="contained"
+            color={!showForm ? "primary" : "secondary"}
+            type="submit"
+            //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
+            onClick={() => setShowForm(!showForm)}
+          >
+            {!showForm ? "Create Event" : "Cancel"}
+          </Button>
+        </Col>
+      </Row>
     </div>
   );
 }

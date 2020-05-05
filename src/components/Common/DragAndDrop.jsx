@@ -49,10 +49,10 @@ const [showSuccess,setSuccess]=useState(false)
       className={
         inDropZone ? "drag-drop-zone inside-drag-area" : "drag-drop-zone"
       }
-      onDrop={(e) => handleDrop(e)}
-      onDragOver={(e) => handleDragOver(e)}
-      onDragEnter={(e) => handleDragEnter(e)}
-      onDragLeave={(e) => handleDragLeave(e)}
+      onDrop={(e) =>!showSuccess && handleDrop(e)}
+      onDragOver={(e) =>!showSuccess && handleDragOver(e)}
+      onDragEnter={(e) =>!showSuccess && handleDragEnter(e)}
+      onDragLeave={(e) =>!showSuccess && handleDragLeave(e)}
     >
     {!showSuccess?
       <div>
