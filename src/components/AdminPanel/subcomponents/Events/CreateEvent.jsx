@@ -13,6 +13,7 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import ClearIcon from "@material-ui/icons/Clear";
 import Icon from "@material-ui/core/Icon";
 import DragAndDrop from "../../../Common/DragAndDrop";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 const list = [
   {
@@ -47,15 +48,14 @@ function CreateEvent() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    let formdata=new FormData();
-    for(let key in data){
-      console.log(key,data[key]);
-      formdata.append(`${key}`,data[key])
+    let formdata = new FormData();
+    for (let key in data) {
+      console.log(key, data[key]);
+      formdata.append(`${key}`, data[key]);
     }
-    formdata.append("event_date",data.event_date.toISOString().split('T')[0])
-    if(files)
-    formdata.append("image",files)
-    formdata.append("test","test val")
+    formdata.append("event_date", data.event_date.toISOString().split("T")[0]);
+    if (files) formdata.append("image", files);
+    formdata.append("test", "test val");
     console.log(formdata);
 
     setLoader(true);
@@ -78,13 +78,13 @@ function CreateEvent() {
     if (NewFiles)
       if (NewFiles.length === 1) {
         let file = NewFiles[0];
-        console.log(file.type.slice(0,5));
+        console.log(file.type.slice(0, 5));
 
-        if (file.type.slice(0,5)!=="image") {
+        if (file.type.slice(0, 5) !== "image") {
           swal("File should be image", "Try again", "warning");
           return;
         }
-        setFiles(file)
+        setFiles(file);
         setSuccess(true);
       } else if (NewFiles.length > 1) {
         swal("Please Select One File", "Try again", "warning");
@@ -144,9 +144,17 @@ function CreateEvent() {
               </Row>
               <Row className="justify-content-center my-3">
                 <Col sm="10">
-                  <DragAndDrop handleFileCheck={handleFileCheck} />
+                  <DragAndDrop handleFileCheck={handleFileCheck} files={files}/>
                 </Col>
-                <div className="text-center text-dark">{files && files.name}</div>
+                {
+                  files &&
+                <Col sm="10" className="text-center text-dark">
+                  <span>{ files.name}</span>
+                  <span onClick={()=>setFiles()}>
+                    <CancelIcon />
+                  </span>
+                </Col>
+                }
               </Row>
               <Row className="justify-content-end mt-2">
                 <Button

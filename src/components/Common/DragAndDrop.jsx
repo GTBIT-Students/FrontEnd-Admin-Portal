@@ -4,7 +4,7 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const DragAndDrop = (props) => {
-  const { handleFileCheck } = props;
+  const { handleFileCheck,files } = props;
   const [inDropZone, setDropZone] = useState(false);
 const [showSuccess,setSuccess]=useState(false)
 
@@ -49,12 +49,12 @@ const [showSuccess,setSuccess]=useState(false)
       className={
         inDropZone ? "drag-drop-zone inside-drag-area" : "drag-drop-zone"
       }
-      onDrop={(e) =>!showSuccess && handleDrop(e)}
-      onDragOver={(e) =>!showSuccess && handleDragOver(e)}
-      onDragEnter={(e) =>!showSuccess && handleDragEnter(e)}
-      onDragLeave={(e) =>!showSuccess && handleDragLeave(e)}
+      onDrop={(e) =>(!showSuccess || !files) && handleDrop(e)}
+      onDragOver={(e) =>(!showSuccess || !files) && handleDragOver(e)}
+      onDragEnter={(e) =>(!showSuccess || !files) && handleDragEnter(e)}
+      onDragLeave={(e) =>(!showSuccess || !files) && handleDragLeave(e)}
     >
-    {!showSuccess?
+    {(!showSuccess || !files)?
       <div>
         <div>
           <CloudUploadIcon style={{ fontSize: "5rem" }} />
