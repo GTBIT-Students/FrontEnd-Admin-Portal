@@ -5,7 +5,7 @@ import TimePicker from "react-time-picker";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "@material-ui/core/Button";
-import { AxiosPost } from "../../../Common/Axios";
+import { AxiosPost, AxiosPut } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
@@ -62,14 +62,16 @@ function CreateEvent() {
     }
     formdata.append("event_date", data.event_date.toISOString().split("T")[0]);
     if (files) formdata.append("image", files);
-    formdata.append("test", "test val");
-    console.log(formdata);
+    else formdata.append("image_url","")
+    //sending additonal id in case of updating event
+    if (EventData) formdata.append("event_id", EventData.id);
 
+    console.log(formdata);
     setLoader(true);
     function handleSuccess(res) {
       console.log(res);
       setLoader(false);
-      swal("Successfully Added", undefined, "success");
+      swal(EventData?"Successfully Updated":"Successfully Added", undefined, "success");
       history.push("/admin");
       history.push("/admin/Events");
     }
@@ -78,14 +80,19 @@ function CreateEvent() {
       setLoader(false);
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
-    AxiosPost("/api/v1/event-list", formdata, handleSuccess, handleError);
+
+    if (EventData) {
+      console.log("Caling put function for update event");
+      AxiosPut("/api/v1/event-list", formdata, handleSuccess, handleError);
+    } else
+      AxiosPost("/api/v1/event-list", formdata, handleSuccess, handleError);
   }
 
   function handleFileCheck(NewFiles, setSuccess) {
     if (NewFiles)
       if (NewFiles.length === 1) {
         let file = NewFiles[0];
-        console.log(file.type.slice(0, 5));
+        console.log(file);
 
         if (file.type.slice(0, 5) !== "image") {
           swal("File should be image", "Try again", "warning");
@@ -149,32 +156,63 @@ function CreateEvent() {
                   />
                 </Col>
               </Row>
-              {EventData && files && (
-                <Row>
-                <Col sm="12">
-                  <img src={files} alt="Event Image" className="d-block img-fluid mx-auto"/>
-                </Col>
-                  <button className="btn btn-outline-dark d-block mx-auto" onClick={()=>setFiles()}>Remove Photo</button>
+              {/* for image with url */}
+              {EventData && files && !files.name && (
+                <Row className="mt-2">
+                  <Col sm="12">
+                    <img
+                      src={files}
+                      alt="Event pic"
+                      className="d-block img-fluid mx-auto"
+                    />
+                  </Col>
+                  <button
+                    className="btn btn-outline-dark d-block mx-auto my-2"
+                    onClick={() => setFiles()}
+                  >
+                    Remove Photo
+                  </button>
                 </Row>
               )}
-              {!files &&
-              <Row className="justify-content-center my-3">
-                <Col sm="10">
-                  <DragAndDrop
-                    handleFileCheck={handleFileCheck}
-                    files={files}
-                  />
-                </Col>
-                {files && (
-                  <Col sm="10" className="text-center text-dark">
-                    <span>{files.name}</span>
-                    <span onClick={() => setFiles()}>
-                      <CancelIcon />
-                    </span>
+
+              {files && files.name && (
+                <Row className="mt-2">
+                  <Col sm="12">
+                    <img
+                      src={URL.createObjectURL(files)}
+                      className="d-block img-fluid mx-auto"
+                      alt="pic"
+                    />
                   </Col>
-                )}
-              </Row>
-              }
+                  <Col>
+                    <button
+                      className="btn btn-outline-dark d-block mx-auto my-2"
+                      onClick={() => setFiles()}
+                    >
+                      Change Photo
+                    </button>
+                  </Col>
+                </Row>
+              )}
+
+              {!files && (
+                <Row className="justify-content-center my-3">
+                  <Col sm="10">
+                    <DragAndDrop
+                      handleFileCheck={handleFileCheck}
+                      files={files}
+                    />
+                  </Col>
+                  {files && (
+                    <Col sm="10" className="text-center text-dark">
+                      <span>{files.name}</span>
+                      <span onClick={() => setFiles()}>
+                        <CancelIcon />
+                      </span>
+                    </Col>
+                  )}
+                </Row>
+              )}
               <Row className="justify-content-end mt-2">
                 <Button
                   className="d-block mr-2"
@@ -182,7 +220,7 @@ function CreateEvent() {
                   color="primary"
                   type="submit"
                 >
-                  Add Event
+                  {EventData?"Update Event":"Add Event"}
                 </Button>
               </Row>
             </form>

@@ -67,7 +67,7 @@ function AxiosDelete(endpoint,body, handleSuccess, handleErr) {
 
 function AxiosPut(endpoint, body, handleSuccess, handleErr) {
   axios
-    .post(`${domain}${endpoint}`, body, options)
+    .put(`${domain}${endpoint}`, body, options)
     .then((res) => {
       if (res.status === 200) handleSuccess(res);
     })
