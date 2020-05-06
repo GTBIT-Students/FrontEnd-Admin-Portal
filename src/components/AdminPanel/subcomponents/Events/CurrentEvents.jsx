@@ -12,18 +12,18 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import swal from "../../../Common/SwalAlert";
-import {useHistory} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import LastTenEvents from "./LastTenEvents";
 import Divider from "@material-ui/core/Divider";
 
 function CurrentEvents() {
-  let history=useHistory();
+  let history = useHistory();
 
   const [data, setData] = useState([]);
   const [MoreData, setMoreData] = useState([]);
   const [loader, setLoader] = useState(true);
-  const [moreBtn,setMoreBtn]=useState(true)
-  const [lastTenEvents,setLastTen]=useState([])
+  const [moreBtn, setMoreBtn] = useState(true);
+  const [lastTenEvents, setLastTen] = useState([]);
 
   useEffect(() => {
     function handleSuccess(res) {
@@ -36,22 +36,20 @@ function CurrentEvents() {
         setMoreData(res.data.current_event.slice(5));
       } else setData(res.data.current_event);
 
-      setLastTen(res.data.previous_event)
+      setLastTen(res.data.previous_event);
     }
 
     AxiosGet("/api/v1/event-list", handleSuccess, (err) => console.log(err));
   }, []);
-useEffect(()=>{
-if(moreBtn===false){
-  let temp=[...data,...MoreData]
-  setData(temp)
-}
-else
-{
-  let temp=data.slice(0,5)
-  setData(temp)
-}
-},[moreBtn])
+  useEffect(() => {
+    if (moreBtn === false) {
+      let temp = [...data, ...MoreData];
+      setData(temp);
+    } else {
+      let temp = data.slice(0, 5);
+      setData(temp);
+    }
+  }, [moreBtn]);
   function handleDelete(id) {
     setLoader(true);
     let body = {
@@ -61,8 +59,8 @@ else
       console.log(res);
       setLoader(false);
       swal("Deleted Successfully", undefined, "success");
-      history.push('/')
-      history.push('/admin/Events')
+      history.push("/");
+      history.push("/admin/Events");
     }
 
     function handleErr(err) {
@@ -78,18 +76,60 @@ else
         <Typography color="textSecondary" gutterBottom>
           Current Events
         </Typography>
-        <List>
+        <div>
           {data.map((item) => (
-            <ListItem key={item.id} className="pl-0">
-              <ListItemIcon style={{ color: "blueviolet", minWidth: "35px" }}>
+            <div key={item.id}>
+              <div className="row border my-2 rounded">
+                <div className="col-1  d-flex">
+                  <RadioButtonUncheckedIcon
+                    fontSize={"small"}
+                    style={{ color: "blueviolet" }}
+                    className="mx-auto my-auto"
+                  />
+                </div>
+                <div className="col-10 col-sm-8 ">
+                  <div>{item.event_name}</div>
+                </div>
+                <div className="col-12 col-sm-3 d-flex justify-content-center align-items-center my-2">
+                  
+                    <button
+                      onClick={() => {
+                        swal(
+                          "Are you sure ?",
+                          "Before Deleting Event",
+                          undefined,
+                          ["No", "Yes"],
+                          () => handleDelete(item.id)
+                        );
+                      }}
+                      className="btn btn-outline-danger p-1 mr-1"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={() =>
+                        history.push({
+                          pathname: "UpdateEvent",
+                          EventData: item,
+                        })
+                      }
+                      className="btn btn-outline-info p-1"
+                    >
+                      Update
+                    </button>
+                
+                </div>
+              </div>
+              {/* <ListItemIcon style={{ color: "blueviolet", minWidth: "35px" }}>
                 <RadioButtonUncheckedIcon fontSize={"small"} />
               </ListItemIcon>
               <ListItemText
                 primary={item.event_name}
                 secondary={item.event_venue}
-              />
-              <ListItemSecondaryAction>
-                {/* <IconButton
+              /> */}
+
+              {/* <ListItemSecondaryAction> */}
+              {/* <IconButton
                   edge="end"
                   aria-label="delete"
                   onClick={() => handleDelete(item.id)}
@@ -97,28 +137,46 @@ else
                 >
                   <DeleteIcon />
                 </IconButton> */}
-                <button onClick={() =>{swal("Are you sure ?","Before Deleting Event",undefined,["No","Yes"],()=>handleDelete(item.id))} } className="btn btn-outline-danger p-1 mr-1">Delete</button>
-                <button onClick={()=>history.push({pathname:'UpdateEvent',EventData:item})} className="btn btn-outline-info p-1">Update</button>
-              </ListItemSecondaryAction>
-            </ListItem>
+              {/* <button
+                  onClick={() => {
+                    swal(
+                      "Are you sure ?",
+                      "Before Deleting Event",
+                      undefined,
+                      ["No", "Yes"],
+                      () => handleDelete(item.id)
+                    );
+                  }}
+                  className="btn btn-outline-danger p-1 mr-1"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() =>
+                    history.push({ pathname: "UpdateEvent", EventData: item })
+                  }
+                  className="btn btn-outline-info p-1"
+                >
+                  Update
+                </button>
+              </ListItemSecondaryAction> */}
+            </div>
           ))}
-
-        </List>
+        </div>
         <div>
           {MoreData.length > 0 && (
             <Button
               variant="outlined"
               color="primary"
               className="m-auto d-block text-info"
-              onClick={()=>setMoreBtn(!moreBtn)}
+              onClick={() => setMoreBtn(!moreBtn)}
             >
-             {moreBtn?"Show More Events":'Show Less Events'}
+              {moreBtn ? "Show More Events" : "Show Less Events"}
             </Button>
           )}
         </div>
       </Loader>
 
-     
       <LastTenEvents data={lastTenEvents} />
     </div>
   );
