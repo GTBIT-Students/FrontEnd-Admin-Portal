@@ -171,8 +171,17 @@ function CreateEvent() {
                     />
                   </Col>
                   <button
+                  type="button"
                     className="btn btn-outline-dark d-block mx-auto my-2"
-                    onClick={() => setFiles()}
+                    onClick={() => {
+                      swal(
+                        "Are you sure ?",
+                        undefined,
+                        undefined,
+                        ["No", "Yes"],
+                        () => setFiles()
+                      );
+                    }}
                   >
                     Remove Photo
                   </button>
@@ -191,7 +200,16 @@ function CreateEvent() {
                   <Col>
                     <button
                       className="btn btn-outline-dark d-block mx-auto my-2"
-                      onClick={() => setFiles()}
+                      type="button"
+                      onClick={() =>
+                        swal(
+                          "Are you sure ?",
+                          undefined,
+                          undefined,
+                          ["No", "Yes"],
+                          () => setFiles()
+                        )
+                      }
                     >
                       Change Photo
                     </button>
@@ -251,7 +269,6 @@ function CreateEvent() {
               className="d-block mr-2"
               variant="contained"
               color={!showForm ? "primary" : "secondary"}
-              
               //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
               onClick={() => setShowForm(!showForm)}
             >
