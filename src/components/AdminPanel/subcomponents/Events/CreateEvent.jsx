@@ -168,6 +168,7 @@ function CreateEvent() {
                       src={files}
                       alt="Event pic"
                       className="d-block img-fluid mx-auto"
+                      style={{maxHeight:'400px'}}
                     />
                   </Col>
                   <button
@@ -195,6 +196,7 @@ function CreateEvent() {
                       src={URL.createObjectURL(files)}
                       className="d-block img-fluid mx-auto"
                       alt="pic"
+                      style={{maxHeight:'400px'}}
                     />
                   </Col>
                   <Col>
