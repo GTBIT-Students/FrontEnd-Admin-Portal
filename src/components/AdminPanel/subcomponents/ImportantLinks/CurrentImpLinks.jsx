@@ -92,7 +92,9 @@ else
                 <IconButton
                   edge="end"
                   aria-label="delete"
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => {
+                    swal("Are you sure ?","Before Deleting Link",undefined,["No","Yes"],()=>handleDelete(item.id))
+                  }}
                 >
                   <DeleteIcon />
                 </IconButton>
