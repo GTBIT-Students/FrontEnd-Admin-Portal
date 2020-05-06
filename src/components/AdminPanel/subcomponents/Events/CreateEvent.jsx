@@ -54,7 +54,7 @@ function CreateEvent() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     let formdata = new FormData();
     for (let key in data) {
       console.log(key, data[key]);
@@ -62,7 +62,7 @@ function CreateEvent() {
     }
     formdata.append("event_date", data.event_date.toISOString().split("T")[0]);
     if (files) formdata.append("image", files);
-    else formdata.append("image_url","")
+    else formdata.append("image_url", "");
     //sending additonal id in case of updating event
     if (EventData) formdata.append("event_id", EventData.id);
 
@@ -71,7 +71,11 @@ function CreateEvent() {
     function handleSuccess(res) {
       console.log(res);
       setLoader(false);
-      swal(EventData?"Successfully Updated":"Successfully Added", undefined, "success");
+      swal(
+        EventData ? "Successfully Updated" : "Successfully Added",
+        undefined,
+        "success"
+      );
       history.push("/admin");
       history.push("/admin/Events");
     }
@@ -114,7 +118,7 @@ function CreateEvent() {
       {showForm && (
         <Loader active={loader}>
           <div>
-            <form onSubmit={handleSubmit}>
+            <form>
               {list.map((item, index) => (
                 <TextField
                   required
@@ -218,9 +222,22 @@ function CreateEvent() {
                   className="d-block mr-2"
                   variant="contained"
                   color="primary"
-                  type="submit"
+                  //type="submit"
+                  onClick={() => {
+                    if (EventData) {
+                      swal(
+                        "Are you sure ?",
+                        undefined,
+                        undefined,
+                        ["No", "Yes"],
+                        handleSubmit
+                      );
+                      console.log("passed");
+                      return;
+                    } else handleSubmit();
+                  }}
                 >
-                  {EventData?"Update Event":"Add Event"}
+                  {EventData ? "Update Event" : "Add Event"}
                 </Button>
               </Row>
             </form>
@@ -234,7 +251,7 @@ function CreateEvent() {
               className="d-block mr-2"
               variant="contained"
               color={!showForm ? "primary" : "secondary"}
-              type="submit"
+              
               //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
               onClick={() => setShowForm(!showForm)}
             >
