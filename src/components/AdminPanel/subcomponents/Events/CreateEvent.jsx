@@ -168,11 +168,11 @@ function CreateEvent() {
                       src={files}
                       alt="Event pic"
                       className="d-block img-fluid mx-auto"
-                      style={{maxHeight:'400px'}}
+                      style={{ maxHeight: "400px" }}
                     />
                   </Col>
                   <button
-                  type="button"
+                    type="button"
                     className="btn btn-outline-dark d-block mx-auto my-2"
                     onClick={() => {
                       swal(
@@ -196,7 +196,7 @@ function CreateEvent() {
                       src={URL.createObjectURL(files)}
                       className="d-block img-fluid mx-auto"
                       alt="pic"
-                      style={{maxHeight:'400px'}}
+                      style={{ maxHeight: "400px" }}
                     />
                   </Col>
                   <Col>
@@ -238,6 +238,19 @@ function CreateEvent() {
                 </Row>
               )}
               <Row className="justify-content-end mt-2">
+                {EventData && (
+                  <Button
+                    className="d-block mr-2"
+                    variant="contained"
+                    color="secondary"
+                    //type="submit"
+                    onClick={() => {
+                      history.goBack();
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                )}
                 <Button
                   className="d-block mr-2"
                   variant="contained"
