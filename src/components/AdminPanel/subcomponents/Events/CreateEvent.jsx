@@ -176,8 +176,8 @@ function CreateEvent() {
                     className="btn btn-outline-dark d-block mx-auto my-2"
                     onClick={() => {
                       swal(
+                        "Removing Photo",
                         "Are you sure ?",
-                        "Before Removing Photo",
                         undefined,
                         ["No", "Yes"],
                         () => setFiles()
@@ -205,8 +205,8 @@ function CreateEvent() {
                       type="button"
                       onClick={() =>
                         swal(
+                          "Changing Photo",
                           "Are you sure ?",
-                          "Before Changing Photo",
                           undefined,
                           ["No", "Yes"],
                           () => setFiles()
@@ -259,8 +259,8 @@ function CreateEvent() {
                   onClick={() => {
                     if (EventData) {
                       swal(
+                        "Update",
                         "Are you sure ?",
-                        "Before Updating Event",
                         undefined,
                         ["No", "Yes"],
                         handleSubmit

@@ -105,8 +105,8 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
                 startIcon={<DeleteIcon />}
                 onClick={() =>
                   swalAlert(
+                    "Delete",
                     "Are u sure?",
-                    undefined,
                     undefined,
                     ["No", "Yes"],
                     handleDelete

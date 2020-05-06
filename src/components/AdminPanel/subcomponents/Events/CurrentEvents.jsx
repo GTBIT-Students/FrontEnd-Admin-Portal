@@ -95,8 +95,8 @@ function CurrentEvents() {
                     <button
                       onClick={() => {
                         swal(
+                          "Delete",
                           "Are you sure ?",
-                          "Before Deleting Event",
                           undefined,
                           ["No", "Yes"],
                           () => handleDelete(item.id)

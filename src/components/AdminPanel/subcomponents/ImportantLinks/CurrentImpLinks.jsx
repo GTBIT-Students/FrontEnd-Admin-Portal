@@ -93,7 +93,7 @@ else
                   edge="end"
                   aria-label="delete"
                   onClick={() => {
-                    swal("Are you sure ?","Before Deleting Link",undefined,["No","Yes"],()=>handleDelete(item.id))
+                    swal("Delete","Are you sure ?",undefined,["No","Yes"],()=>handleDelete(item.id))
                   }}
                 >
                   <DeleteIcon />
