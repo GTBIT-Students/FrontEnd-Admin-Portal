@@ -54,6 +54,7 @@ else
 },[moreBtn])
 
   function handleDelete(id) {
+
     setLoader(true);
     let body = {
       notice_id: id,
@@ -93,7 +94,9 @@ else
                 <IconButton
                   edge="end"
                   aria-label="delete"
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => {
+                    swal("Are you sure ?","Before Deleting Notice",undefined,["No","Yes"],()=>handleDelete(item.id))
+                  }}
                 >
                   <DeleteIcon />
                 </IconButton>
