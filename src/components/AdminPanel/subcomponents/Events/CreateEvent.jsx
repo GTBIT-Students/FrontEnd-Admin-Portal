@@ -31,17 +31,24 @@ const list = [
 ];
 function CreateEvent() {
   let history = useHistory();
+  //EventData is defined whenever we press update button on current events list
+  let EventData = history.location.EventData;
   const [data, setData] = useState({
-    event_name: "",
-    event_link: "",
-    event_date: new Date(),
-    event_time: "10:00",
-    event_venue: "",
+    event_name: EventData ? EventData.event_name : "",
+    event_link: EventData ? EventData.event_link : "",
+    event_date: EventData ? new Date(EventData.event_date) : new Date(),
+    event_time: EventData ? EventData.event_time : "10:00",
+    event_venue: EventData ? EventData.event_venue : "",
   });
   const [loader, setLoader] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-  const [files, setFiles] = useState();
+  const [showForm, setShowForm] = useState(EventData ? true : false);
+  const [files, setFiles] = useState(EventData ? EventData.event_image : "");
 
+  useEffect(() => {
+    if (EventData) {
+      console.log("eventdata exist", EventData);
+    }
+  }, []);
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -142,20 +149,32 @@ function CreateEvent() {
                   />
                 </Col>
               </Row>
+              {EventData && files && (
+                <Row>
+                <Col sm="12">
+                  <img src={files} alt="Event Image" className="d-block img-fluid mx-auto"/>
+                </Col>
+                  <button className="btn btn-outline-dark d-block mx-auto" onClick={()=>setFiles()}>Remove Photo</button>
+                </Row>
+              )}
+              {!files &&
               <Row className="justify-content-center my-3">
                 <Col sm="10">
-                  <DragAndDrop handleFileCheck={handleFileCheck} files={files}/>
+                  <DragAndDrop
+                    handleFileCheck={handleFileCheck}
+                    files={files}
+                  />
                 </Col>
-                {
-                  files &&
-                <Col sm="10" className="text-center text-dark">
-                  <span>{ files.name}</span>
-                  <span onClick={()=>setFiles()}>
-                    <CancelIcon />
-                  </span>
-                </Col>
-                }
+                {files && (
+                  <Col sm="10" className="text-center text-dark">
+                    <span>{files.name}</span>
+                    <span onClick={() => setFiles()}>
+                      <CancelIcon />
+                    </span>
+                  </Col>
+                )}
               </Row>
+              }
               <Row className="justify-content-end mt-2">
                 <Button
                   className="d-block mr-2"
@@ -170,21 +189,22 @@ function CreateEvent() {
           </div>
         </Loader>
       )}
-
-      <Row className=" mt-3">
-        <Col className="col-auto">
-          <Button
-            className="d-block mr-2"
-            variant="contained"
-            color={!showForm ? "primary" : "secondary"}
-            type="submit"
-            //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
-            onClick={() => setShowForm(!showForm)}
-          >
-            {!showForm ? "Create Event" : "Cancel"}
-          </Button>
-        </Col>
-      </Row>
+      {!EventData && (
+        <Row className=" mt-3">
+          <Col className="col-auto">
+            <Button
+              className="d-block mr-2"
+              variant="contained"
+              color={!showForm ? "primary" : "secondary"}
+              type="submit"
+              //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
+              onClick={() => setShowForm(!showForm)}
+            >
+              {!showForm ? "Create Event" : "Cancel"}
+            </Button>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 }
