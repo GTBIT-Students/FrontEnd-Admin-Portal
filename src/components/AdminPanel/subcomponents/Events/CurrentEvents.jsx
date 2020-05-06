@@ -97,7 +97,7 @@ else
                 >
                   <DeleteIcon />
                 </IconButton> */}
-                <button onClick={() => handleDelete(item.id)} className="btn btn-outline-danger p-1 mr-1">Delete</button>
+                <button onClick={() =>{swal("Are you sure ?","Before Deleting Event",undefined,["No","Yes"],()=>handleDelete(item.id))} } className="btn btn-outline-danger p-1 mr-1">Delete</button>
                 <button onClick={()=>history.push({pathname:'UpdateEvent',EventData:item})} className="btn btn-outline-info p-1">Update</button>
               </ListItemSecondaryAction>
             </ListItem>

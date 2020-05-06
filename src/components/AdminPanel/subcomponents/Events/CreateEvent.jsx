@@ -176,7 +176,7 @@ function CreateEvent() {
                     onClick={() => {
                       swal(
                         "Are you sure ?",
-                        undefined,
+                        "Before Removing Photo",
                         undefined,
                         ["No", "Yes"],
                         () => setFiles()
@@ -204,7 +204,7 @@ function CreateEvent() {
                       onClick={() =>
                         swal(
                           "Are you sure ?",
-                          undefined,
+                          "Before Changing Photo",
                           undefined,
                           ["No", "Yes"],
                           () => setFiles()
@@ -245,7 +245,7 @@ function CreateEvent() {
                     if (EventData) {
                       swal(
                         "Are you sure ?",
-                        undefined,
+                        "Before Updating Event",
                         undefined,
                         ["No", "Yes"],
                         handleSubmit
