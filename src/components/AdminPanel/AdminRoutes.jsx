@@ -5,6 +5,7 @@ import Events from "./subcomponents/Events/Events";
 import UpdateEvent from "./subcomponents/Events/UpdateEvent";
 import ImportantLinks from "./subcomponents/ImportantLinks/ImportantLinks";
 import Notices from "./subcomponents/Notices/Notices";
+import Society from "./subcomponents/Society/Society";
 
 function AdminRoutes() {
   const { params } = useParams();
@@ -12,22 +13,24 @@ function AdminRoutes() {
   switch (params) {
     case "UpdateTopNotice":
       return <UpdateTopNotice />;
-      
+
     case "Events":
       return <Events />;
-     
-    case "ImportantLinks":
-      return <ImportantLinks/>;
-    
-    case "Notices":
-      return <Notices/>;
-     
+
     case "UpdateEvent":
-      return <UpdateEvent/>;
-     
+      return <UpdateEvent />;
+
+    case "ImportantLinks":
+      return <ImportantLinks />;
+
+    case "Notices":
+      return <Notices />;
+
+    case "Society":
+      return <Society/>;
+
     default:
       return <h1>404 Not Found</h1>;
-      
   }
 }
 
