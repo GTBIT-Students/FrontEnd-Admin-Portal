@@ -45,8 +45,14 @@ const list = [
 function CreateSociety() {
   let history = useHistory();
   const [data, setData] = useState({
-    notice: "",
-    notice_link: "",
+    name: "",
+    description: "",
+    tag_line: "",
+    teacher_incharge: "",
+    student_incharge: "",
+    founded_on: "",
+    is_active: "",
+    category: "",
   });
   const [loader, setLoader] = useState(false);
   const [showForm, setShowForm] = useState(true);
@@ -107,8 +113,8 @@ function CreateSociety() {
                 <Col>
                   <label className="text-secondary mr-1"> Founded on:</label>
                   <DatePicker
-                    onChange={(val) => setData({ ...data, event_date: val })}
-                    value={data.event_date}
+                    onChange={(val) => setData({ ...data,founded_on: val })}
+                    value={data.founded_on}
                     clearIcon={null}
                   />
                 </Col>
@@ -116,8 +122,8 @@ function CreateSociety() {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={true}
-                        onChange={handleChange}
+                        checked={data.is_active}
+                        onChange={(e)=>setData({...data,is_active:e.target.checked})}
                         name="checkedB"
                         color="primary"
                       />
@@ -135,7 +141,8 @@ function CreateSociety() {
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={""}
+                      value={data.category}
+                      name="category"
                       onChange={handleChange}
                     >
                       <MenuItem value={"technical"}>Technical</MenuItem>
