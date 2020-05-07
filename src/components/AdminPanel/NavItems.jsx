@@ -58,6 +58,12 @@ function NavItems({ click }) {
       icon: <InboxIcon />,
       onClick:  click ,
     },
+    {
+      name: "Society",
+      route: "/admin/Society",
+      icon: <InboxIcon />,
+      onClick:  click ,
+    },
   ];
   return (
     <div>
