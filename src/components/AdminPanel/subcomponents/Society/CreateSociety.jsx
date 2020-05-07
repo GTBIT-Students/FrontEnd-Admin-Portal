@@ -61,8 +61,24 @@ function CreateSociety() {
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
   }
-  function handleFileCheck(NewFiles, setSucces) {
-    console.log(NewFiles);
+  function handleFileCheck(NewFiles, setSuccess) {
+    
+    if (NewFiles)
+      if (NewFiles.length === 1) {
+        let file = NewFiles[0];
+        console.log(file);
+
+        if (file.type.slice(0, 5) !== "image") {
+          swal("File should be image", "Try again", "warning");
+          return;
+        }
+        setFiles(file);
+        setSuccess(true);
+      } else if (NewFiles.length > 1) {
+        swal("Please Select One File", "Try again", "warning");
+      }
+    console.log([...NewFiles]);
+    console.log(NewFiles.length);
   }
   function handleSubmit(e) {
     e.preventDefault();
@@ -109,8 +125,8 @@ function CreateSociety() {
                 />
               ))}
 
-              <Row>
-                <Col>
+              <Row className="justify-content-around">
+                <Col className="col-auto">
                   <label className="text-secondary mr-1"> Founded on:</label>
                   <DatePicker
                     onChange={(val) => setData({ ...data,founded_on: val })}
@@ -118,7 +134,7 @@ function CreateSociety() {
                     clearIcon={null}
                   />
                 </Col>
-                <Col>
+                <Col className="col-auto">
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -134,6 +150,7 @@ function CreateSociety() {
               </Row>
               <Row>
                 <Col>
+                <div>
                   <FormControl style={{ width: "10rem" }}>
                     <InputLabel id="demo-simple-select-label">
                       Society Category
@@ -151,6 +168,7 @@ function CreateSociety() {
                       <MenuItem value={"miscellaneous"}>Miscellaneous</MenuItem>
                     </Select>
                   </FormControl>
+                  </div>
                 </Col>
                 <Col className="d-flex align-items-end">
                   <button
@@ -163,8 +181,38 @@ function CreateSociety() {
                   </button>
                 </Col>
               </Row>
-              {showDnD && (
-                <div className="my-4">
+              {files && files.name && (
+                <Row className="mt-4 ">
+                  <Col sm="12">
+                    <img
+                      src={URL.createObjectURL(files)}
+                      className="d-block img-fluid mx-auto"
+                      alt="pic"
+                      style={{ maxHeight: "200px" }}
+                    />
+                  </Col>
+                  <Col>
+                    <button
+                      className="btn btn-outline-dark d-block mx-auto my-2"
+                      type="button"
+                      onClick={() =>
+                        swal(
+                          "Changing Logo",
+                          "Are you sure ?",
+                          undefined,
+                          ["No", "Yes"],
+                          () => setFiles()
+                        )
+                      }
+                    >
+                      Change Logo
+                    </button>
+                  </Col>
+                </Row>
+              )}
+
+              {(showDnD) && (
+                <div className="my-4 mx-auto" style={{width:'80%'}}>
                   <DragAndDrop
                     handleFileCheck={handleFileCheck}
                     files={files}
