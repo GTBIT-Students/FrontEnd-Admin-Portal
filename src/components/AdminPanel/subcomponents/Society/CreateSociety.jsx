@@ -81,11 +81,11 @@ function CreateSociety() {
     teacher_incharge: "",
     student_incharge: "",
     founded_on: "",
-    is_active: "",
+    is_active: true,
     category: "",
   });
   const [loader, setLoader] = useState(false);
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [files, setFiles] = useState();
   const [showDnD, setDnd] = useState(false);
   function handleChange(e) {
@@ -110,22 +110,36 @@ function CreateSociety() {
     console.log(NewFiles.length);
   }
   function handleSubmit(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    let formdata = new FormData();
+    for (let key in data) {
+      console.log(key, data[key]);
+      formdata.append(`${key}`, data[key]);
+    }
+    console.log(data.founded_on.toISOString().split("T")[0]);
+    formdata.append("founded_on", data.founded_on.toISOString().split("T")[0]);
+    formdata.append("is_active", JSON.stringify(data.is_active));
+    if (files) formdata.append("logo", files);
+   // else formdata.append("image_url", "");
+
     console.log(data);
+    for(var pair of formdata.entries()){
+      console.log(pair[0], pair[1]);
+  }
     setLoader(true);
     function handleSuccess(res) {
       console.log(res);
       setLoader(false);
       swal("Successfully Added", undefined, "success");
-      history.push("/admin");
-      history.push("/admin/Notices");
+      history.push("/admin/Society");
+      //history.push("");
     }
     function handleError(err) {
       console.log(err);
       setLoader(false);
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
-    AxiosPost("/api/v1/notice-list", data, handleSuccess, handleError);
+    AxiosPost("/api/v1/society-list", formdata, handleSuccess, handleError);
   }
   return (
     <div className="mt-3">
