@@ -19,16 +19,15 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import DragAndDrop from "../../../Common/DragAndDrop";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const list = [
   {
     name: "name",
     Display: "Society Name",
   },
-  {
-    name: "description",
-    Display: "Society Description",
-  },
+
   {
     name: "tag_line",
     Display: "Tag Line",
@@ -42,6 +41,37 @@ const list = [
     Display: "Student Incharge",
   },
 ];
+
+//modules and formats for react quill
+let modules = {
+  toolbar: [
+    [{ header: [1, 2, false] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+    ["link", "image"],
+    ["clean"],
+  ],
+};
+
+let formats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+];
+
 function CreateSociety() {
   let history = useHistory();
   const [data, setData] = useState({
@@ -62,7 +92,6 @@ function CreateSociety() {
     setData({ ...data, [e.target.name]: e.target.value });
   }
   function handleFileCheck(NewFiles, setSuccess) {
-    
     if (NewFiles)
       if (NewFiles.length === 1) {
         let file = NewFiles[0];
@@ -124,12 +153,12 @@ function CreateSociety() {
                   value={data[item.name]}
                 />
               ))}
-
-              <Row className="justify-content-around">
+              
+              <Row className="justify-content-around my-3">
                 <Col className="col-auto">
                   <label className="text-secondary mr-1"> Founded on:</label>
                   <DatePicker
-                    onChange={(val) => setData({ ...data,founded_on: val })}
+                    onChange={(val) => setData({ ...data, founded_on: val })}
                     value={data.founded_on}
                     clearIcon={null}
                   />
@@ -139,7 +168,9 @@ function CreateSociety() {
                     control={
                       <Checkbox
                         checked={data.is_active}
-                        onChange={(e)=>setData({...data,is_active:e.target.checked})}
+                        onChange={(e) =>
+                          setData({ ...data, is_active: e.target.checked })
+                        }
                         name="checkedB"
                         color="primary"
                       />
@@ -148,36 +179,42 @@ function CreateSociety() {
                   />
                 </Col>
               </Row>
-              <Row>
-                <Col>
-                <div>
-                  <FormControl style={{ width: "10rem" }}>
-                    <InputLabel id="demo-simple-select-label">
-                      Society Category
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={data.category}
-                      name="category"
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={"technical"}>Technical</MenuItem>
-                      <MenuItem value={"cultural"}>Cultural</MenuItem>
-                      <MenuItem value={"religious"}>Religious</MenuItem>
-                      <MenuItem value={"miscellaneous"}>Miscellaneous</MenuItem>
-                    </Select>
-                  </FormControl>
+             
+              <Row className="justify-content-around">
+                <Col className="col-auto">
+                  <div>
+                    <FormControl style={{ width: "10rem" }}>
+                      <InputLabel id="demo-simple-select-label">
+                        Society Category
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={data.category}
+                        name="category"
+                        onChange={handleChange}
+                      >
+                        <MenuItem value={"technical"}>Technical</MenuItem>
+                        <MenuItem value={"cultural"}>Cultural</MenuItem>
+                        <MenuItem value={"religious"}>Religious</MenuItem>
+                        <MenuItem value={"miscellaneous"}>
+                          Miscellaneous
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </div>
                 </Col>
-                <Col className="d-flex align-items-end">
+                <Col className="d-flex align-items-end col-auto">
                   <button
                     type="button"
-                    
-                    className={showDnD ?'btn-outline-danger btn d-block':'btn-outline-success btn d-block'}
-                    onClick={()=>setDnd(!showDnD)}
+                    className={
+                      showDnD
+                        ? "btn-outline-danger btn d-block"
+                        : "btn-outline-success btn d-block"
+                    }
+                    onClick={() => setDnd(!showDnD)}
                   >
-                    {showDnD?'Cancel':'Add Logo'}
+                    {showDnD ? "Cancel" : "Add Logo"}
                   </button>
                 </Col>
               </Row>
@@ -211,14 +248,27 @@ function CreateSociety() {
                 </Row>
               )}
 
-              {(showDnD) && (
-                <div className="my-4 mx-auto" style={{width:'80%'}}>
+              {showDnD && (
+                <div className="my-4 mx-auto" style={{ width: "80%" }}>
                   <DragAndDrop
                     handleFileCheck={handleFileCheck}
                     files={files}
                   />
                 </div>
               )}
+
+              <div className="my-4">
+              <div><label className="text-secondary">Society Description:</label></div>
+
+                <ReactQuill
+                  modules={modules}
+                  formats={formats}
+                  theme="snow"
+                  value={data.description}
+                  onChange={(val) => setData({ ...data, description: val })}
+                />
+              </div>
+
               <Row className="justify-content-end mt-2">
                 <Button
                   className="d-block mr-2"
