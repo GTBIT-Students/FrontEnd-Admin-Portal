@@ -1,0 +1,43 @@
+.society_main{
+  display:grid;
+  grid-template-columns:100px auto;
+  grid-template-areas:'logo name name name active buttons'
+  'logo  teach teach stud stud buttons'
+  'logo past past upcom upcom buttons';
+  justify-items: center;
+
+  border: 1px grey dashed;
+  transition: box-shadow 500ms;
+  }
+
+  .society_main:hover{
+    box-shadow: inset 0 0 10px;
+  }
+  /* .society_main div{
+    border:1px red dotted;
+  } */
+  .society_logo{
+    grid-area:logo
+  }
+  .society_name{
+    grid-area:name
+  }
+  .society_active{
+    grid-area:active
+  }
+  .society_teach{
+    grid-area:teach
+  }
+  .society_stud{
+    grid-area:stud
+  }
+  .society_past{
+    grid-area:past
+  }
+  .society_upcom{
+    grid-area:upcom
+  }
+  .society_buttons{
+    grid-area:buttons
+  }
+  
