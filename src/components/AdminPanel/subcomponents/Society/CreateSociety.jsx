@@ -21,6 +21,7 @@ import Select from "@material-ui/core/Select";
 import DragAndDrop from "../../../Common/DragAndDrop";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Modal from 'react-bootstrap/Modal'
 
 const list = [
   {
@@ -88,6 +89,25 @@ function CreateSociety() {
   const [showForm, setShowForm] = useState(false);
   const [files, setFiles] = useState();
   const [showDnD, setDnd] = useState(false);
+  const [modal, openModal] = useState(true);
+
+  let Soc_Data = history.location.Soc_Data;
+  useEffect(() => {
+    if (Soc_Data) {
+      setData({
+        name: Soc_Data.name,
+        description: Soc_Data.description,
+        tag_line: Soc_Data.tag_line,
+        teacher_incharge: Soc_Data.teacher_incharge,
+        student_incharge: Soc_Data.student_incharge,
+        founded_on: new Date(Soc_Data.founded_on),
+        is_active: Soc_Data.is_active,
+        category: Soc_Data.category,
+      });
+      setShowForm(true);
+    }
+  }, []);
+
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -120,12 +140,12 @@ function CreateSociety() {
     formdata.append("founded_on", data.founded_on.toISOString().split("T")[0]);
     formdata.append("is_active", JSON.stringify(data.is_active));
     if (files) formdata.append("logo", files);
-   // else formdata.append("image_url", "");
+    // else formdata.append("image_url", "");
 
     console.log(data);
-    for(var pair of formdata.entries()){
+    for (var pair of formdata.entries()) {
       console.log(pair[0], pair[1]);
-  }
+    }
     setLoader(true);
     function handleSuccess(res) {
       console.log(res);
@@ -167,7 +187,7 @@ function CreateSociety() {
                   value={data[item.name]}
                 />
               ))}
-              
+
               <Row className="justify-content-around my-3">
                 <Col className="col-auto">
                   <label className="text-secondary mr-1"> Founded on:</label>
@@ -193,7 +213,7 @@ function CreateSociety() {
                   />
                 </Col>
               </Row>
-             
+
               <Row className="justify-content-around">
                 <Col className="col-auto">
                   <div>
@@ -270,9 +290,18 @@ function CreateSociety() {
                   />
                 </div>
               )}
+              {!Soc_Data && (
+                <div>
+                  <button onClick={() => openModal(true)}>
+                    Update Carousel Images{" "}
+                  </button>
+                </div>
+              )}
 
               <div className="my-4">
-              <div><label className="text-secondary">Society Description:</label></div>
+                <div>
+                  <label className="text-secondary">Society Description:</label>
+                </div>
 
                 <ReactQuill
                   modules={modules}
@@ -290,7 +319,7 @@ function CreateSociety() {
                   color="primary"
                   type="submit"
                 >
-                  Add Society
+                  {Soc_Data ? "Update Society" : "Add Society"}
                 </Button>
               </Row>
             </form>
@@ -298,20 +327,37 @@ function CreateSociety() {
         </Loader>
       )}
 
-      <Row className=" mt-3">
-        <Col className="col-auto">
-          <Button
-            className="d-block mr-2"
-            variant="contained"
-            color={!showForm ? "primary" : "secondary"}
-            type="submit"
-            //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
-            onClick={() => setShowForm(!showForm)}
-          >
-            {!showForm ? "Add Society" : "Cancel"}
+      {!Soc_Data && (
+        <Row className=" mt-3">
+          <Col className="col-auto">
+            <Button
+              className="d-block mr-2"
+              variant="contained"
+              color={!showForm ? "primary" : "secondary"}
+              type="submit"
+              //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
+              onClick={() => setShowForm(!showForm)}
+            >
+              {!showForm ? "Add Society" : "Cancel"}
+            </Button>
+          </Col>
+        </Row>
+      )}
+
+      <Modal size="lg" className="Carouselmodal" show={modal} >
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={()=>openModal(false)}>
+            Close
           </Button>
-        </Col>
-      </Row>
+          <Button variant="primary" onClick={()=>openModal(false)}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
