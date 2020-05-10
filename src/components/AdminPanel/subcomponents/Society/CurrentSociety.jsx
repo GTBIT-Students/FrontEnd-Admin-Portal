@@ -42,13 +42,13 @@ function CurrentSociety() {
   function handleDelete(id) {
     setLoader(true);
     let body = {
-      event_id: id,
+      society_id: id,
     };
     function handleSuccess(res) {
       console.log(res);
       setLoader(false);
       swal("Deleted Successfully", undefined, "success");
-      history.push("/");
+      history.push("/admin");
       history.push("/admin/Society");
     }
 
@@ -57,7 +57,7 @@ function CurrentSociety() {
       setLoader(false);
       swal("Something Went Wrong", undefined, "error");
     }
-    AxiosDelete("/api/v1/event-list", body, handleSuccess, handleErr);
+    AxiosDelete("/api/v1/society-list", body, handleSuccess, handleErr);
   }
   return (
     <div className="mt-4">
@@ -68,25 +68,31 @@ function CurrentSociety() {
         <div>
           {data.map((item) => (
             <div className="society_main my-3 p-2" key={item.id}>
-              <div className="society_logo d-flex">
+              <div className="society_logo d-flex align-items-center">
                 <img src={item.logo} alt="logo" className="img-fluid" />
               </div>
               <div className="society_name">
-                <h3>{item.name}</h3>
+                <h3>
+                  <u>{item.name}</u>
+                </h3>
               </div>
-              <div className="society_active">
+              <div className="society_active mr-2">
                 <div>
                   {item.is_active ? (
-                    <span className="text-info border border-info p-1">Active</span>
+                    <span className="text-info border border-info p-1">
+                      Active
+                    </span>
                   ) : (
-                    <span className="text-danger border border border-danger p-1">Not Active</span>
+                    <span className="text-danger border border border-danger p-1">
+                      Not Active
+                    </span>
                   )}
                 </div>
               </div>
-              <div className="society_teach">
+              <div className="society_teach mr-1">
                 <strong>Teacher Incharge:</strong> {item.teacher_incharge}
               </div>
-              <div className="society_stud">
+              <div className="society_stud mr-1">
                 <strong>Student incharge:</strong> {item.student_incharge}
               </div>
               <div className="society_past">
@@ -99,10 +105,23 @@ function CurrentSociety() {
               </div>
 
               <div className="society_buttons d-flex flex-column justify-content-center">
-                <button className="btn btn-outline-danger my-1 mx-3">Delete</button>
+                <button
+                  className="btn btn-outline-danger my-1 mx-3"
+                  onClick={() =>
+                    swal(
+                      "Delete",
+                      "Are you sure ?",
+                      undefined,
+                      ["No", "Yes"],
+                      () => handleDelete(item.id)
+                    )
+                  }
+                >
+                  Delete
+                </button>
                 <button className="btn btn-outline-primary mx-3">Update</button>
                 <div class="circle">
-                  <ArrowBackIosIcon className="circle_arrow"/>
+                  <ArrowBackIosIcon className="circle_arrow" />
                 </div>
               </div>
             </div>

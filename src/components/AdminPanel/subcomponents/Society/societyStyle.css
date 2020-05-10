@@ -84,19 +84,26 @@
   @media only screen and (max-width: 600px) {
   
     .society_main{
+      width:100%;
       grid-gap:5px;
       grid-template-columns: 70px auto;
       grid-template-areas: "logo name name"
       "logo active ."
       "logo teach teach"
       "logo stud stud"
-      ". past past"
-      ". upcom upcom"
+      "logo past past"
+      "logo upcom upcom"
       ;
       justify-items: start;
     }
 
     .society_buttons:hover {
       width:100px;
+    }
+    .society_main:hover{
+      box-shadow: none;
+    }
+    .society_logo img{
+      max-height: 100px;
     }
   }
