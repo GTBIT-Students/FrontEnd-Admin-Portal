@@ -22,6 +22,7 @@ import DragAndDrop from "../../../Common/DragAndDrop";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Modal from "react-bootstrap/Modal";
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const list = [
   {
@@ -90,6 +91,7 @@ function CreateSociety() {
   const [files, setFiles] = useState();
   const [showDnD, setDnd] = useState(false);
   const [modal, openModal] = useState(true);
+  const [carousel_files, setCaroFiles] = useState([]);
 
   let Soc_Data = history.location.Soc_Data;
   useEffect(() => {
@@ -160,6 +162,25 @@ function CreateSociety() {
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
     AxiosPost("/api/v1/society-list", formdata, handleSuccess, handleError);
+  }
+  function handleCarouselFiles(NewFiles, setSuccess) {
+    console.log(NewFiles);
+    if (NewFiles)
+      if (NewFiles.length >= 1) {
+        Array.from(NewFiles).forEach((file) => {
+          if (file.type.slice(0, 5) !== "image") {
+            swal("File should be image", "Try again", "warning");
+            return;
+          }
+          let temp = carousel_files;
+          temp.push(file);
+          console.log(file);
+        });
+        setCaroFiles(NewFiles);
+
+        setSuccess(true);
+      }
+    console.log(NewFiles.length);
   }
   return (
     <div className="mt-3">
@@ -293,9 +314,13 @@ function CreateSociety() {
                   />
                 </div>
               )}
-              {!Soc_Data && (
+              {Soc_Data && (
                 <div>
-                  <button onClick={() => openModal(true)}>
+                  <button
+                    type="button"
+                    onClick={() => openModal(true)}
+                    className="btn btn-dark"
+                  >
                     Update Carousel Images{" "}
                   </button>
                 </div>
@@ -351,7 +376,36 @@ function CreateSociety() {
         <Modal.Header closeButton>
           <Modal.Title>Add Carousel Photos</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <div>
+            <span>Current Carousel Photos</span>
+            <div className="d-flex flex-row">
+              {Soc_Data &&
+                Soc_Data.image_carousel.map((image) => (
+                  <div key={image} style={{ width: "200px" }}>
+                    <img src={image} className="img-fluid" />
+                  </div>
+                ))}
+            </div>
+          </div>
+          <div >
+          <div className="d-flex flex-row overflow-auto">
+            {carousel_files &&
+              Array.from(carousel_files).map((file) => (
+                <div key={file} className="position-relative">
+                <img  src={URL.createObjectURL(file)} style={{ width: "200px",height:"150px" }} />
+                <div className="imgCross"><CancelIcon/></div>
+                </div>
+              )
+              )}
+              </div>
+            <DragAndDrop
+              inputProps={{ multiple: true, accept: "image/*,.png,.jpg,.jpeg" }}
+              handleFileCheck={handleCarouselFiles}
+              files={carousel_files}
+            />
+          </div>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => openModal(false)}>
             Close

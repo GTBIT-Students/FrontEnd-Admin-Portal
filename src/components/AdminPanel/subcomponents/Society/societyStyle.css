@@ -112,3 +112,9 @@
   .Carouselmodal{
     z-index: 2000;
   }
+
+  .imgCross{
+    position:absolute;
+    top:0px;
+    right:0px;
+  }
