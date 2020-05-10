@@ -22,7 +22,7 @@ import DragAndDrop from "../../../Common/DragAndDrop";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Modal from "react-bootstrap/Modal";
-import CancelIcon from '@material-ui/icons/Cancel';
+import CancelIcon from "@material-ui/icons/Cancel";
 
 const list = [
   {
@@ -76,6 +76,7 @@ let formats = [
 
 function CreateSociety() {
   let history = useHistory();
+  let Soc_Data = history.location.Soc_Data;
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -90,10 +91,12 @@ function CreateSociety() {
   const [showForm, setShowForm] = useState(false);
   const [files, setFiles] = useState();
   const [showDnD, setDnd] = useState(false);
-  const [modal, openModal] = useState(true);
+  const [modal, openModal] = useState(false);
   const [carousel_files, setCaroFiles] = useState([]);
+  const [img_carousel, setImgCaro] = useState(
+    Soc_Data && Soc_Data.image_carousel
+  );
 
-  let Soc_Data = history.location.Soc_Data;
   useEffect(() => {
     if (Soc_Data) {
       setData({
@@ -109,7 +112,6 @@ function CreateSociety() {
       setShowForm(true);
     }
   }, []);
-
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -165,6 +167,7 @@ function CreateSociety() {
   }
   function handleCarouselFiles(NewFiles, setSuccess) {
     console.log(NewFiles);
+
     if (NewFiles)
       if (NewFiles.length >= 1) {
         Array.from(NewFiles).forEach((file) => {
@@ -172,15 +175,44 @@ function CreateSociety() {
             swal("File should be image", "Try again", "warning");
             return;
           }
-          let temp = carousel_files;
-          temp.push(file);
           console.log(file);
         });
-        setCaroFiles(NewFiles);
 
         setSuccess(true);
+        if (carousel_files.length >= 1)
+          setCaroFiles([...carousel_files, ...NewFiles]);
+        else setCaroFiles([...NewFiles]);
       }
     console.log(NewFiles.length);
+  }
+
+  function handleCross(i) {
+    let temp = [
+      ...carousel_files.slice(0, i),
+      ...carousel_files.slice(i + 1, carousel_files.length),
+    ];
+    console.log(temp);
+    setCaroFiles(temp);
+  }
+  function handleSubmitCaro(){
+    let formdata=new FormData()
+    formdata.append("society_id",Soc_Data.id)
+    formdata.append("image",carousel_files)
+    formdata.append("Image_url",img_carousel)
+    setLoader(true);
+    function handleSuccess(res) {
+      console.log(res);
+      setLoader(false);
+      swal("Successfully Added", undefined, "success");
+      history.push("/admin/Society");
+      //history.push("");
+    }
+    function handleError(err) {
+      console.log(err);
+      setLoader(false);
+      swal("Something Went Wrong! Try Again", undefined, "error");
+    }
+    AxiosPost("/api/v1/society-image-carousel", formdata, handleSuccess, handleError);
   }
   return (
     <div className="mt-3">
@@ -372,49 +404,77 @@ function CreateSociety() {
         </Row>
       )}
 
-      <Modal size="lg" className="Carouselmodal" show={modal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Carousel Photos</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>
-            <span>Current Carousel Photos</span>
-            <div className="d-flex flex-row">
-              {Soc_Data &&
-                Soc_Data.image_carousel.map((image) => (
-                  <div key={image} style={{ width: "200px" }}>
-                    <img src={image} className="img-fluid" />
-                  </div>
-                ))}
-            </div>
-          </div>
-          <div >
-          <div className="d-flex flex-row overflow-auto">
-            {carousel_files &&
-              Array.from(carousel_files).map((file) => (
-                <div key={file} className="position-relative">
-                <img  src={URL.createObjectURL(file)} style={{ width: "200px",height:"150px" }} />
-                <div className="imgCross"><CancelIcon/></div>
-                </div>
-              )
-              )}
+      {Soc_Data && (
+        <Modal size="lg" className="Carouselmodal" show={modal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Carousel Photos</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <span>Current Carousel Photos</span>
+              <div className="d-flex flex-row overflow-auto my-2">
+                {img_carousel.length > 0
+                  ? img_carousel.map((image, index) => (
+                      <div key={index} className="position-relative">
+                        <img src={image} style={{ width: "200px", height: "150px" }} />
+                        <div
+                          className="imgCross bg-light"
+                          onClick={() =>
+                            setImgCaro([
+                              ...img_carousel.slice(0, index),
+                              ...img_carousel.slice(
+                                index + 1,
+                                img_carousel.length
+                              ),
+                            ])
+                          }
+                        >
+                          <CancelIcon />
+                        </div>
+                      </div>
+                    ))
+                  : "No Image found.Please Upload "}
               </div>
-            <DragAndDrop
-              inputProps={{ multiple: true, accept: "image/*,.png,.jpg,.jpeg" }}
-              handleFileCheck={handleCarouselFiles}
-              files={carousel_files}
-            />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => openModal(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={() => openModal(false)}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            </div>
+            <div>
+              <span>Uploaded Photos</span>
+              <div className="d-flex flex-row overflow-auto my-2">
+                {carousel_files &&
+                  carousel_files.map((file, index) => (
+                    <div key={index} className="position-relative">
+                      <img
+                        src={URL.createObjectURL(file)}
+                        style={{ width: "200px", height: "150px" }}
+                      />
+                      <div
+                        className="imgCross bg-light"
+                        onClick={() => handleCross(index)}
+                      >
+                        <CancelIcon />
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              <DragAndDrop
+                inputProps={{
+                  multiple: true,
+                  accept: "image/*,.png,.jpg,.jpeg",
+                }}
+                handleFileCheck={handleCarouselFiles}
+                files={carousel_files}
+              />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => openModal(false)}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={() => handleSubmitCaro()}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 }
