@@ -1,13 +1,18 @@
 .society_main{
+  position: relative;
   display:grid;
   grid-template-columns:100px auto;
-  grid-template-areas:'logo name name name active buttons'
-  'logo  teach teach stud stud buttons'
-  'logo past past upcom upcom buttons';
+  grid-template-areas:'logo name name name active'
+  'logo  teach teach stud stud '
+  'logo past past upcom upcom';
   justify-items: center;
 
-  border: 1px grey dashed;
+  width:95%;
+  margin-right:auto ;
+  margin-left:auto ;
+  border: .1px grey dashed;
   transition: box-shadow 500ms;
+  font-size: smaller;
   }
 
   .society_main:hover{
@@ -38,6 +43,60 @@
     grid-area:upcom
   }
   .society_buttons{
-    grid-area:buttons
+    grid-area:buttons;
+    position:absolute;
+    background:grey;
+    height:100%;
+    width:15px;
+    right:0px;
+    transition:all .5s ease;
+  }
+
+  .society_buttons button{
+    display:none;
+  }
+
+  .society_buttons:hover {
+    width:150px;
+  }
+  .society_buttons:hover button{
+    display:block;
+  }
+  .circle{
+    width:20px;
+    height:20px;
+    background:grey;
+    border-radius:50%;
+    margin-left:-10px;
+    position:absolute;
+    margin-top:auto;
+    margin-bottom:auto;
+    top:0px;
+    bottom:0px;
+  }
+  .circle_arrow{
+    width: 80%;
+    height: 86%;
+    margin-left: 4px;
+    color: white;
   }
   
+  @media only screen and (max-width: 600px) {
+  
+    .society_main{
+      grid-gap:5px;
+      grid-template-columns: 70px auto;
+      grid-template-areas: "logo name name"
+      "logo active ."
+      "logo teach teach"
+      "logo stud stud"
+      ". past past"
+      ". upcom upcom"
+      ;
+      justify-items: start;
+    }
+
+    .society_buttons:hover {
+      width:100px;
+    }
+  }

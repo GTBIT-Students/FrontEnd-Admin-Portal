@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AxiosGet, AxiosDelete } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
-import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
-import './societyStyle.css'
+import "./societyStyle.css";
 
 function CurrentSociety() {
   let history = useHistory();
@@ -68,34 +68,43 @@ function CurrentSociety() {
         <div>
           {data.map((item) => (
             <div className="society_main my-3 p-2" key={item.id}>
-              <div className="society_logo">
+              <div className="society_logo d-flex">
                 <img src={item.logo} alt="logo" className="img-fluid" />
               </div>
               <div className="society_name">
                 <h3>{item.name}</h3>
               </div>
               <div className="society_active">
-                <p>{item.is_active?<span className="text-info">Active</span>
-                :<span className="text-danger">Not Active</span>}</p>
+                <div>
+                  {item.is_active ? (
+                    <span className="text-info border border-info p-1">Active</span>
+                  ) : (
+                    <span className="text-danger border border border-danger p-1">Not Active</span>
+                  )}
+                </div>
               </div>
               <div className="society_teach">
                 <strong>Teacher Incharge:</strong> {item.teacher_incharge}
               </div>
               <div className="society_stud">
-                <strong>student incharge:</strong> {item.student_incharge}
+                <strong>Student incharge:</strong> {item.student_incharge}
               </div>
               <div className="society_past">
-                <strong>Past events:</strong>{item.past_event.length}
+                <strong>Past events:</strong>
+                {item.past_event.length}
               </div>
               <div className="society_upcom">
-                <strong>Upcoming events:</strong>{item.upcoming_event.length}
+                <strong>Upcoming events:</strong>
+                {item.upcoming_event.length}
               </div>
 
               <div className="society_buttons d-flex flex-column justify-content-center">
-                <button className="btn btn-danger my-1">Delete</button>
-                <button className="btn btn-primary">Update</button>
+                <button className="btn btn-outline-danger my-1 mx-3">Delete</button>
+                <button className="btn btn-outline-primary mx-3">Update</button>
+                <div class="circle">
+                  <ArrowBackIosIcon className="circle_arrow"/>
+                </div>
               </div>
-
             </div>
           ))}
         </div>
