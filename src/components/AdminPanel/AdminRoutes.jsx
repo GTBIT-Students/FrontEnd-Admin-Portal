@@ -6,6 +6,7 @@ import UpdateEvent from "./subcomponents/Events/UpdateEvent";
 import ImportantLinks from "./subcomponents/ImportantLinks/ImportantLinks";
 import Notices from "./subcomponents/Notices/Notices";
 import Society from "./subcomponents/Society/Society";
+import UpdateSociety from "./subcomponents/Society/UpdateSociety";
 
 function AdminRoutes() {
   const { params } = useParams();
@@ -28,6 +29,9 @@ function AdminRoutes() {
 
     case "Society":
       return <Society/>;
+
+    case "UpdateSociety":
+      return <UpdateSociety/>;
 
     default:
       return <h1>404 Not Found</h1>;

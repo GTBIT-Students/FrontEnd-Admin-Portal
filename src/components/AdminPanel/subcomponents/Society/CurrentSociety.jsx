@@ -119,7 +119,17 @@ function CurrentSociety() {
                 >
                   Delete
                 </button>
-                <button className="btn btn-outline-primary mx-3">Update</button>
+                <button
+                  className="btn btn-outline-primary mx-3"
+                  onClick={() =>
+                    history.push({
+                      pathname: "UpdateSociety",
+                      Soc_Data: item,
+                    })
+                  }
+                >
+                  Update
+                </button>
                 <div class="circle">
                   <ArrowBackIosIcon className="circle_arrow" />
                 </div>
