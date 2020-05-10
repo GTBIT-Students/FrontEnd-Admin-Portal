@@ -4,7 +4,7 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const DragAndDrop = (props) => {
-  const { handleFileCheck,files } = props;
+  const { handleFileCheck,files,inputProps } = props;
   const [inDropZone, setDropZone] = useState(false);
 const [showSuccess,setSuccess]=useState(false)
 
@@ -61,9 +61,9 @@ const [showSuccess,setSuccess]=useState(false)
         </div>
         <div>
           <input
-            type="file"
+           {...inputProps}
+           type={'file'}
             id="Dropfile"
-            accept="image/*,.png,.jpg,.jpeg"
             onChange={(e) => {
               handleFileCheck(e.target.files,setSuccess);
             }}

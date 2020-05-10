@@ -21,7 +21,7 @@ import Select from "@material-ui/core/Select";
 import DragAndDrop from "../../../Common/DragAndDrop";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Modal from 'react-bootstrap/Modal'
+import Modal from "react-bootstrap/Modal";
 
 const list = [
   {
@@ -287,6 +287,9 @@ function CreateSociety() {
                   <DragAndDrop
                     handleFileCheck={handleFileCheck}
                     files={files}
+                    inputProps={{
+                      accept: "image/*,.png,.jpg,.jpeg",
+                    }}
                   />
                 </div>
               )}
@@ -344,16 +347,16 @@ function CreateSociety() {
         </Row>
       )}
 
-      <Modal size="lg" className="Carouselmodal" show={modal} >
+      <Modal size="lg" className="Carouselmodal" show={modal}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add Carousel Photos</Modal.Title>
         </Modal.Header>
         <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={()=>openModal(false)}>
+          <Button variant="secondary" onClick={() => openModal(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={()=>openModal(false)}>
+          <Button variant="primary" onClick={() => openModal(false)}>
             Save Changes
           </Button>
         </Modal.Footer>

@@ -225,6 +225,9 @@ function CreateEvent() {
                     <DragAndDrop
                       handleFileCheck={handleFileCheck}
                       files={files}
+                      inputProps={{
+                        accept: "image/*,.png,.jpg,.jpeg",
+                      }}
                     />
                   </Col>
                   {files && (
