@@ -2,9 +2,9 @@
   .drag-drop-zone {
     padding: 2rem;
     text-align: center;
-    background: #f8f4f475;
-    border-radius: 0.5rem;
-   outline:2px dashed black 
+    background: white;
+   outline:2px dashed black ;
+   box-shadow: 0 0 10px;
   }
   .drag-drop-zone p {
     color: #FFF;
