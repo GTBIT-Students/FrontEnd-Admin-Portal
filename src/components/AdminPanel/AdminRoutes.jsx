@@ -7,6 +7,7 @@ import ImportantLinks from "./subcomponents/ImportantLinks/ImportantLinks";
 import Notices from "./subcomponents/Notices/Notices";
 import Society from "./subcomponents/Society/Society";
 import UpdateSociety from "./subcomponents/Society/UpdateSociety";
+import UpdateNotice from './subcomponents/Notices/UpdateNotice'
 
 function AdminRoutes() {
   const { params } = useParams();
@@ -26,6 +27,9 @@ function AdminRoutes() {
 
     case "Notices":
       return <Notices />;
+
+    case "UpdateNotice":
+      return <UpdateNotice />;
 
     case "Society":
       return <Society/>;

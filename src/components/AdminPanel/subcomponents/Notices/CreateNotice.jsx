@@ -5,13 +5,13 @@ import TimePicker from "react-time-picker";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "@material-ui/core/Button";
-import { AxiosPost } from "../../../Common/Axios";
+import { AxiosPost,AxiosPut } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import ClearIcon from '@material-ui/icons/Clear';
-import Icon from '@material-ui/core/Icon';
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import ClearIcon from "@material-ui/icons/Clear";
+import Icon from "@material-ui/core/Icon";
 
 const list = [
   {
@@ -19,20 +19,30 @@ const list = [
     Display: "Notice",
   },
   {
-    name: "notice_link",
-    Display: "Notice Link",
+    name: "description",
+    Display: "Description",
   },
-  
 ];
 function CreateNotice() {
   let history = useHistory();
+  let Notice_Data = history.location.NoticeData;
+  console.log(Notice_Data);
   const [data, setData] = useState({
     notice: "",
-    notice_link: "",
+    description: "",
   });
   const [loader, setLoader] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
+  useEffect(() => {
+    if (Notice_Data) {
+      setData({
+        notice: Notice_Data.notice,
+        description: Notice_Data.description,
+      });
+      setShowForm(true)
+    }
+  }, []);
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -53,6 +63,9 @@ function CreateNotice() {
       setLoader(false);
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
+    if(Notice_Data)
+    AxiosPut("/api/v1/notice-list", {...data,notice_id:Notice_Data.id}, handleSuccess, handleError);
+    else
     AxiosPost("/api/v1/notice-list", data, handleSuccess, handleError);
   }
   return (
@@ -81,7 +94,7 @@ function CreateNotice() {
                   value={data[item.name]}
                 />
               ))}
-             
+
               <Row className="justify-content-end mt-2">
                 <Button
                   className="d-block mr-2"
@@ -89,29 +102,28 @@ function CreateNotice() {
                   color="primary"
                   type="submit"
                 >
-                  Add Notice
+                  {Notice_Data?"Update Notice":"Add Notice"}
                 </Button>
               </Row>
             </form>
           </div>
         </Loader>
-      ) }
-       
-          <Row className=" mt-3">
-          <Col className="col-auto">
+      )}
 
-            <Button
-              className="d-block mr-2"
-              variant="contained"
-              color={!showForm?"primary":"secondary"}
-              type="submit"
-              //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
-              onClick={()=>setShowForm(!showForm)}
-            >
-              {!showForm?'Create Notice':'Cancel'}
-            </Button>
-          </Col>
-          </Row>
+      {!Notice_Data && <Row className=" mt-3">
+        <Col className="col-auto">
+          <Button
+            className="d-block mr-2"
+            variant="contained"
+            color={!showForm ? "primary" : "secondary"}
+            type="submit"
+            //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
+            onClick={() => setShowForm(!showForm)}
+          >
+            {!showForm ? "Create Notice" : "Cancel"}
+          </Button>
+        </Col>
+      </Row>}
     </div>
   );
 }
