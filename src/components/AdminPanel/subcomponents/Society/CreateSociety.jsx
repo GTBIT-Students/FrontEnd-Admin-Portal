@@ -5,7 +5,7 @@ import TimePicker from "react-time-picker";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "@material-ui/core/Button";
-import { AxiosPost } from "../../../Common/Axios";
+import { AxiosPost,AxiosPut } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
@@ -125,8 +125,10 @@ function CreateSociety() {
           swal("File should be image", "Try again", "warning");
           return;
         }
-        setFiles(file);
-        setSuccess(true);
+        else{
+          setFiles(file);
+          setSuccess(true);
+        }
       } else if (NewFiles.length > 1) {
         swal("Please Select One File", "Try again", "warning");
       }
@@ -145,7 +147,8 @@ function CreateSociety() {
     formdata.append("is_active", JSON.stringify(data.is_active));
     if (files) formdata.append("logo", files);
     // else formdata.append("image_url", "");
-
+if(Soc_Data)
+formdata.append("society_id",Soc_Data.id)
     console.log(data);
     for (var pair of formdata.entries()) {
       console.log(pair[0], pair[1]);
@@ -155,6 +158,7 @@ function CreateSociety() {
       console.log(res);
       setLoader(false);
       swal("Successfully Added", undefined, "success");
+      history.push("/admin");
       history.push("/admin/Society");
       //history.push("");
     }
@@ -163,27 +167,44 @@ function CreateSociety() {
       setLoader(false);
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
+    if(Soc_Data)
+    AxiosPut("/api/v1/society-list", formdata, handleSuccess, handleError);
+    else
     AxiosPost("/api/v1/society-list", formdata, handleSuccess, handleError);
   }
   function handleCarouselFiles(NewFiles, setSuccess) {
     console.log(NewFiles);
 
     if (NewFiles)
-      if (NewFiles.length >= 1) {
-        Array.from(NewFiles).forEach((file) => {
-          if (file.type.slice(0, 5) !== "image") {
-            swal("File should be image", "Try again", "warning");
-            return;
-          }
-          console.log(file);
-        });
+    if (NewFiles.length === 1) {
+      let file = NewFiles[0];
+      console.log(file);
 
+      if (file.type.slice(0, 5) !== "image") {
+        swal("File should be image", "Try again", "warning");
+        return;
+      }
+      
+      setCaroFiles(file)
         setSuccess(true);
+      
+    } else if (NewFiles.length > 1) {
+      swal("Please Select One File", "Try again", "warning");
+    }
+      // if (NewFiles.length >= 1) {
+      //   Array.from(NewFiles).forEach((file) => {
+      //     if (file.type.slice(0, 5) !== "image") {
+      //       swal("File should be image", "Try again", "warning");
+      //       return;
+      //     }
+      //     console.log(file);
+      //   });
+
+       
         // if (carousel_files.length >= 1)
         //   setCaroFiles([...carousel_files, ...NewFiles]);
         // else setCaroFiles([...NewFiles]);
-        setCaroFiles(NewFiles[0])
-      }
+      //}
     console.log(NewFiles.length);
   }
 
@@ -214,7 +235,7 @@ function CreateSociety() {
       console.log(res);
       setLoader(false);
       swal("Successfully Added", undefined, "success");
-      history.push("/admin/Society");
+      openModal(false)
       //history.push("");
     }
     function handleError(err) {
@@ -373,7 +394,7 @@ function CreateSociety() {
               )}
               
 
-              <div className="my-4">
+              <div className="mt-1 mb-3">
                 <div>
                   <label className="text-secondary">Society Description:</label>
                 </div>
@@ -394,7 +415,7 @@ function CreateSociety() {
                     onClick={() => openModal(true)}
                     className="btn btn-dark p-1 d-block mx-auto"
                   >
-                    Update Carousel Images{" "}
+                    Update Carousel Images-[{img_carousel.length}]{" "}
                   </button>
                 </div>
               )}
@@ -432,12 +453,13 @@ function CreateSociety() {
 
       {Soc_Data && (
         <Modal size="lg" className="Carouselmodal" show={modal}>
+        <Loader active={loader}>
           <Modal.Header closeButton>
             <Modal.Title>Add Carousel Photos</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div>
-              <span>Current Carousel Photos</span>
+              <span><strong>Current Carousel Photos</strong></span>
               <div className="d-flex flex-row overflow-auto my-2">
                 {img_carousel.length > 0
                   ? img_carousel.map((image, index) => (
@@ -462,12 +484,12 @@ function CreateSociety() {
                         </div>
                       </div>
                     ))
-                  : "No Image found.Please Upload "}
+                  :<p className="mx-auto text-secondary font-smaller">No Image found.Please Upload </p> }
               </div>
             </div>
             <div>
-              <span>Uploaded Photos</span>
-              <div className="d-flex flex-row overflow-auto my-2">
+              <span><strong>Uploaded Photos</strong></span>
+              <div className="d-flex flex-row overflow-auto my-2 justify-content-center">
                 {carousel_files &&
                   (
                     <div className="position-relative">
@@ -484,6 +506,8 @@ function CreateSociety() {
                     </div>
                   )}
               </div>
+              <div style={{width:'80%'}} className="mx-auto">
+
               <DragAndDrop
                 inputProps={{
                   // multiple: true,
@@ -492,6 +516,7 @@ function CreateSociety() {
                 handleFileCheck={handleCarouselFiles}
                 files={carousel_files}
               />
+              </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -502,6 +527,7 @@ function CreateSociety() {
               Save Changes
             </Button>
           </Modal.Footer>
+        </Loader>
         </Modal>
       )}
     </div>

@@ -145,7 +145,7 @@ function CurrentSociety() {
               className="m-auto d-block text-info"
               onClick={() => setMoreBtn(!moreBtn)}
             >
-              {moreBtn ? "Show More Events" : "Show Less Events"}
+              {moreBtn ? "Show More" : "Show Less"}
             </Button>
           )}
         </div>
