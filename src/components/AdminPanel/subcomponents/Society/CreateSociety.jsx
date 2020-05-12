@@ -217,7 +217,7 @@ formdata.append("society_id",Soc_Data.id)
     setCaroFiles(temp);
   }
   function handleSubmitCaro() {
-    console.log(carousel_files[0]);
+    console.log(carousel_files);
     console.log(img_carousel);
     // console.log(carousel_files.length);
     // let newImage_Arr = [];
@@ -227,6 +227,7 @@ formdata.append("society_id",Soc_Data.id)
     // console.log(newImage_Arr);
     let formdata = new FormData();
     formdata.append("society_id", Soc_Data.id);
+    if(carousel_files)
     formdata.append("image", carousel_files);
     formdata.append("image_url",JSON.stringify(img_carousel));
 

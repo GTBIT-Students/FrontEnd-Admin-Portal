@@ -48,7 +48,7 @@
     position:absolute;
     background:grey;
     height:100%;
-    width:20px;
+    width:18px;
     right:0px;
     transition:all .5s ease;
   }
@@ -103,7 +103,7 @@
     }
 
     .society_buttons:hover {
-      width:100px;
+      width:200px;
     }
     .society_main:hover{
       box-shadow: none;
