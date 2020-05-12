@@ -92,7 +92,7 @@ function CreateSociety() {
   const [files, setFiles] = useState();
   const [showDnD, setDnd] = useState(false);
   const [modal, openModal] = useState(false);
-  const [carousel_files, setCaroFiles] = useState([]);
+  const [carousel_files, setCaroFiles] = useState();
   const [img_carousel, setImgCaro] = useState(
     Soc_Data && Soc_Data.image_carousel
   );
@@ -179,9 +179,10 @@ function CreateSociety() {
         });
 
         setSuccess(true);
-        if (carousel_files.length >= 1)
-          setCaroFiles([...carousel_files, ...NewFiles]);
-        else setCaroFiles([...NewFiles]);
+        // if (carousel_files.length >= 1)
+        //   setCaroFiles([...carousel_files, ...NewFiles]);
+        // else setCaroFiles([...NewFiles]);
+        setCaroFiles(NewFiles[0])
       }
     console.log(NewFiles.length);
   }
@@ -194,11 +195,20 @@ function CreateSociety() {
     console.log(temp);
     setCaroFiles(temp);
   }
-  function handleSubmitCaro(){
-    let formdata=new FormData()
-    formdata.append("society_id",Soc_Data.id)
-    formdata.append("image",carousel_files)
-    formdata.append("Image_url",img_carousel)
+  function handleSubmitCaro() {
+    console.log(carousel_files[0]);
+    console.log(img_carousel);
+    // console.log(carousel_files.length);
+    // let newImage_Arr = [];
+    // for (var i = 0; i < carousel_files.length; i++) {
+    //   newImage_Arr.push(carousel_files[i]);
+    // }
+    // console.log(newImage_Arr);
+    let formdata = new FormData();
+    formdata.append("society_id", Soc_Data.id);
+    formdata.append("image", carousel_files);
+    formdata.append("image_url",JSON.stringify(img_carousel));
+
     setLoader(true);
     function handleSuccess(res) {
       console.log(res);
@@ -212,7 +222,12 @@ function CreateSociety() {
       setLoader(false);
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
-    AxiosPost("/api/v1/society-image-carousel", formdata, handleSuccess, handleError);
+    AxiosPost(
+      "/api/v1/society-image-carousel",
+      formdata,
+      handleSuccess,
+      handleError
+    );
   }
   return (
     <div className="mt-3">
@@ -416,7 +431,10 @@ function CreateSociety() {
                 {img_carousel.length > 0
                   ? img_carousel.map((image, index) => (
                       <div key={index} className="position-relative">
-                        <img src={image} style={{ width: "200px", height: "150px" }} />
+                        <img
+                          src={image}
+                          style={{ width: "200px", height: "150px" }}
+                        />
                         <div
                           className="imgCross bg-light"
                           onClick={() =>
@@ -440,24 +458,24 @@ function CreateSociety() {
               <span>Uploaded Photos</span>
               <div className="d-flex flex-row overflow-auto my-2">
                 {carousel_files &&
-                  carousel_files.map((file, index) => (
-                    <div key={index} className="position-relative">
+                  (
+                    <div className="position-relative">
                       <img
-                        src={URL.createObjectURL(file)}
+                        src={URL.createObjectURL(carousel_files)}
                         style={{ width: "200px", height: "150px" }}
                       />
                       <div
                         className="imgCross bg-light"
-                        onClick={() => handleCross(index)}
+                        onClick={() => setCaroFiles()}
                       >
                         <CancelIcon />
                       </div>
                     </div>
-                  ))}
+                  )}
               </div>
               <DragAndDrop
                 inputProps={{
-                  multiple: true,
+                  // multiple: true,
                   accept: "image/*,.png,.jpg,.jpeg",
                 }}
                 handleFileCheck={handleCarouselFiles}
@@ -480,3 +498,18 @@ function CreateSociety() {
 }
 
 export default CreateSociety;
+
+//  carousel_files.map((file, index) => (
+//   <div key={index} className="position-relative">
+//     <img
+//       src={URL.createObjectURL(file)}
+//       style={{ width: "200px", height: "150px" }}
+//     />
+//     <div
+//       className="imgCross bg-light"
+//       onClick={() => handleCross(index)}
+//     >
+//       <CancelIcon />
+//     </div>
+//   </div>
+// )) 
