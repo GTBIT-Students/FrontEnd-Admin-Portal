@@ -7,7 +7,7 @@ function UpdateEvent() {
     let history=useHistory()
     console.log(history);
     if(!history.location.Soc_Data){
-        history.push('/admin')
+        history.push('/admin/Society')
     }
     return (
         <div>

@@ -106,7 +106,7 @@ function CurrentSociety() {
 
               <div className="society_buttons d-flex flex-column justify-content-center">
                 <button
-                  className="btn btn-outline-danger my-1 mx-3"
+                  className="btn btn-outline-danger my-1 mx-3 p-1"
                   onClick={() =>
                     swal(
                       "Delete",
@@ -120,7 +120,7 @@ function CurrentSociety() {
                   Delete
                 </button>
                 <button
-                  className="btn btn-outline-primary mx-3"
+                  className="btn btn-outline-primary mx-3 p-1"
                   onClick={() =>
                     history.push({
                       pathname: "UpdateSociety",

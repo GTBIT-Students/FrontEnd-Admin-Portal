@@ -311,14 +311,24 @@ function CreateSociety() {
                     type="button"
                     className={
                       showDnD
-                        ? "btn-outline-danger btn d-block"
-                        : "btn-outline-success btn d-block"
+                        ? "btn-outline-danger btn d-block p-1"
+                        : "btn-outline-success btn d-block p-1"
                     }
                     onClick={() => setDnd(!showDnD)}
                   >
-                    {showDnD ? "Cancel" : "Add Logo"}
+                    {showDnD ? "Cancel" : (Soc_Data?"Change Logo":"Add Logo")}
                   </button>
                 </Col>
+                {Soc_Data && !files &&  
+                <Col sm="12" className="mt-2">
+                    <img
+                      src={Soc_Data.logo}
+                      className="d-block img-fluid mx-auto"
+                      alt="pic"
+                      style={{ maxHeight: "150px" }}
+                    />
+                  </Col>
+                }
               </Row>
               {files && files.name && (
                 <Row className="mt-4 ">
@@ -327,12 +337,12 @@ function CreateSociety() {
                       src={URL.createObjectURL(files)}
                       className="d-block img-fluid mx-auto"
                       alt="pic"
-                      style={{ maxHeight: "200px" }}
+                      style={{ maxHeight: "150px" }}
                     />
                   </Col>
                   <Col>
                     <button
-                      className="btn btn-outline-dark d-block mx-auto my-2"
+                      className="btn btn-outline-dark d-block mx-auto my-2 p-1"
                       type="button"
                       onClick={() =>
                         swal(
@@ -361,17 +371,7 @@ function CreateSociety() {
                   />
                 </div>
               )}
-              {Soc_Data && (
-                <div>
-                  <button
-                    type="button"
-                    onClick={() => openModal(true)}
-                    className="btn btn-dark"
-                  >
-                    Update Carousel Images{" "}
-                  </button>
-                </div>
-              )}
+              
 
               <div className="my-4">
                 <div>
@@ -387,6 +387,17 @@ function CreateSociety() {
                 />
               </div>
 
+              {Soc_Data && (
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => openModal(true)}
+                    className="btn btn-dark p-1 d-block mx-auto"
+                  >
+                    Update Carousel Images{" "}
+                  </button>
+                </div>
+              )}
               <Row className="justify-content-end mt-2">
                 <Button
                   className="d-block mr-2"
