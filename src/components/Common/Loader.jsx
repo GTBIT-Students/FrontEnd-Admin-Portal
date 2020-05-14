@@ -12,6 +12,7 @@ function Loader({ children, active }) {
           overlay: (base) => ({
             ...base,
             background: "rgba(0,0,0,0.1)",
+            minHeight:'50px'
           }),
         }}
         style={{ background: "none" }}

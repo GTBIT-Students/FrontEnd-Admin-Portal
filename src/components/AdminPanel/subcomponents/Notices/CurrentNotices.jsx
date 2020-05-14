@@ -15,6 +15,8 @@ import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
 import LastTenNotices from "./LastTenNotices";
 import Divider from "@material-ui/core/Divider";
+import "./noticeStyle.css";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 
 function CurrentNotices() {
   let history = useHistory();
@@ -73,55 +75,53 @@ function CurrentNotices() {
   }
   return (
     <div className="mt-4">
-      <Loader active={loader}>
+      <Loader active={loader} >
         <Typography color="textSecondary" gutterBottom>
           Current Notices
         </Typography>
-        <List dense={true}>
+        <div>
           {data.map((item) => (
-            <div key={item.id}>
-              <div className="row border my-2 rounded">
-                <div className="col-1  d-flex">
-                  <RadioButtonUncheckedIcon
-                    fontSize={"small"}
-                    style={{ color: "blueviolet" }}
-                    className="mx-auto my-auto"
-                  />
+            <div key={item.id} className="CurrentDataContainer">
+              <RadioButtonUncheckedIcon
+                className="mx-3"
+                style={{ color: "blueviolet",fontSize:'.9rem' }}
+              />
+
+              <div>{item.notice}</div>
+
+              <div className="DragBarContainer">
+                <div class="Arrowcircle">
+                  <ArrowBackIosIcon className="circle_arr" />
                 </div>
-                <div className="col-10 col-sm-8 ">
-                  <div>{item.notice}</div>
-                </div>
-                <div className="col-12 col-sm-3 d-flex justify-content-center align-items-center my-2">
-                  <button
-                    onClick={() => {
-                      swal(
-                        "Delete",
-                        "Are you sure ?",
-                        undefined,
-                        ["No", "Yes"],
-                        () => handleDelete(item.id)
-                      );
-                    }}
-                    className="btn btn-outline-danger p-1 mr-1"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    onClick={() =>
-                      history.push({
-                        pathname: "UpdateNotice",
-                        NoticeData: item,
-                      })
-                    }
-                    className="btn btn-outline-info p-1"
-                  >
-                    Update
-                  </button>
-                </div>
+                <button
+                  onClick={() => {
+                    swal(
+                      "Delete",
+                      "Are you sure ?",
+                      undefined,
+                      ["No", "Yes"],
+                      () => handleDelete(item.id)
+                    );
+                  }}
+                  className="btn btn-outline-danger p-1 mr-1"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() =>
+                    history.push({
+                      pathname: "UpdateNotice",
+                      NoticeData: item,
+                    })
+                  }
+                  className="btn btn-outline-info p-1"
+                >
+                  Update
+                </button>
               </div>
             </div>
           ))}
-        </List>
+        </div>
         <div>
           {MoreData.length > 0 && (
             <Button
