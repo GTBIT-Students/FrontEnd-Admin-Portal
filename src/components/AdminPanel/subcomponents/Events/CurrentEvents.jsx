@@ -15,6 +15,11 @@ import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
 import LastTenEvents from "./LastTenEvents";
 import Divider from "@material-ui/core/Divider";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+
+const bgStyle={
+  background:"linear-gradient(to right,#fe5d70,#fe909d)",
+}
 
 function CurrentEvents() {
   let history = useHistory();
@@ -78,49 +83,44 @@ function CurrentEvents() {
         </Typography>
         <div>
           {data.map((item) => (
-            <div key={item.id}>
-              <div className="row border my-2 rounded">
-                <div className="col-1  d-flex">
-                  <RadioButtonUncheckedIcon
-                    fontSize={"small"}
-                    style={{ color: "blueviolet" }}
-                    className="mx-auto my-auto"
-                  />
+            <div key={item.id} className="CurrentDataContainer">
+              <RadioButtonUncheckedIcon
+                className="mx-3"
+                style={{ color: "blueviolet",fontSize:'.9rem' }}
+              />
+
+              <div>{item.event_name}</div>
+
+              <div className="DragBarContainer" style={bgStyle}>
+                <div class="Arrowcircle">
+                  <ArrowBackIosIcon className="circle_arr" />
                 </div>
-                <div className="col-10 col-sm-8 ">
-                  <div>{item.event_name}</div>
-                </div>
-                <div className="col-12 col-sm-3 d-flex justify-content-center align-items-center my-2">
-                  
-                    <button
-                      onClick={() => {
-                        swal(
-                          "Delete",
-                          "Are you sure ?",
-                          undefined,
-                          ["No", "Yes"],
-                          () => handleDelete(item.id)
-                        );
-                      }}
-                      className="btn btn-outline-danger p-1 mr-1"
-                    >
-                      Delete
-                    </button>
-                    <button
-                      onClick={() =>
-                        history.push({
-                          pathname: "UpdateEvent",
-                          EventData: item,
-                        })
-                      }
-                      className="btn btn-outline-info p-1"
-                    >
-                      Update
-                    </button>
-                
-                </div>
+                <button
+                  onClick={() => {
+                    swal(
+                      "Delete",
+                      "Are you sure ?",
+                      undefined,
+                      ["No", "Yes"],
+                      () => handleDelete(item.id)
+                    );
+                  }}
+                  className="btn btn-outline-danger p-1 mr-1"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() =>
+                    history.push({
+                      pathname: "UpdateEvent",
+                      EventData: item,
+                    })
+                  }
+                  className="btn btn-outline-info p-1"
+                >
+                  Update
+                </button>
               </div>
-          
             </div>
           ))}
         </div>
@@ -144,3 +144,49 @@ function CurrentEvents() {
 }
 
 export default CurrentEvents;
+
+
+// <div key={item.id}>
+// <div className="row border my-2 rounded">
+//   <div className="col-1  d-flex">
+//     <RadioButtonUncheckedIcon
+//       fontSize={"small"}
+//       style={{ color: "blueviolet" }}
+//       className="mx-auto my-auto"
+//     />
+//   </div>
+//   <div className="col-10 col-sm-8 ">
+//     <div>{item.event_name}</div>
+//   </div>
+//   <div className="col-12 col-sm-3 d-flex justify-content-center align-items-center my-2">
+    
+//       <button
+//         onClick={() => {
+//           swal(
+//             "Delete",
+//             "Are you sure ?",
+//             undefined,
+//             ["No", "Yes"],
+//             () => handleDelete(item.id)
+//           );
+//         }}
+//         className="btn btn-outline-danger p-1 mr-1"
+//       >
+//         Delete
+//       </button>
+//       <button
+//         onClick={() =>
+//           history.push({
+//             pathname: "UpdateEvent",
+//             EventData: item,
+//           })
+//         }
+//         className="btn btn-outline-info p-1"
+//       >
+//         Update
+//       </button>
+  
+//   </div>
+// </div>
+
+// </div>

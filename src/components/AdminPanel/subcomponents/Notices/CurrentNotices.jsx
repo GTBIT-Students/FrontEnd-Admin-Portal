@@ -15,8 +15,13 @@ import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
 import LastTenNotices from "./LastTenNotices";
 import Divider from "@material-ui/core/Divider";
-import "./noticeStyle.css";
+import "../../../Common/commonStyle.css";
+
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+
+const bgStyle={
+  background:"linear-gradient(to top, #0ba360 0%, #3cba92 100%)",
+}
 
 function CurrentNotices() {
   let history = useHistory();
@@ -89,7 +94,7 @@ function CurrentNotices() {
 
               <div>{item.notice}</div>
 
-              <div className="DragBarContainer">
+              <div className="DragBarContainer" style={bgStyle}>
                 <div class="Arrowcircle">
                   <ArrowBackIosIcon className="circle_arr" />
                 </div>
