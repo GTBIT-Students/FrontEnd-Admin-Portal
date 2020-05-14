@@ -28,23 +28,19 @@ function LastTenNotices({data}) {
         </Typography>
         </ExpansionPanelSummary>
         <Loader active={data.length===0}>
-        <ExpansionPanelDetails>
-        <List>
+        <ExpansionPanelDetails className="p-1">
+        <div className="w-100">
           {data.map((item) => (
-            <ListItem key={item.id} className="p-0">
-              <ListItemIcon  style={{ color: "blueviolet",minWidth:'40px' }}>
-                <RadioButtonUncheckedIcon
-                  fontSize={"small"}
-                 
-                />
-              </ListItemIcon>
-              <ListItemText
-                primary={item.notice_list.notice}
-                secondary={item.notice_list.notice_link}
-              ></ListItemText>
-            </ListItem>
+            <div key={item.id} className="CurrentDataContainer">
+              <RadioButtonUncheckedIcon
+                className="mx-3"
+                style={{ color: "blueviolet",fontSize:'.9rem' }}
+              />
+
+              <div>{item.notice_list.notice}</div>
+              </div>
           ))}
-        </List>
+        </div>
         </ExpansionPanelDetails>
         </Loader>
         </ExpansionPanel>
