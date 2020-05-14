@@ -118,7 +118,7 @@ else
       </Loader>
 
      
-      <LastTenLinks data={lastTenLinks} />
+      {/* <LastTenLinks data={lastTenLinks} /> */}
     </div>
   );
 }

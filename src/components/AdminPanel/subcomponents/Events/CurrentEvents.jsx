@@ -120,46 +120,7 @@ function CurrentEvents() {
                 
                 </div>
               </div>
-              {/* <ListItemIcon style={{ color: "blueviolet", minWidth: "35px" }}>
-                <RadioButtonUncheckedIcon fontSize={"small"} />
-              </ListItemIcon>
-              <ListItemText
-                primary={item.event_name}
-                secondary={item.event_venue}
-              /> */}
-
-              {/* <ListItemSecondaryAction> */}
-              {/* <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => handleDelete(item.id)}
-                  style={{color:'red'}}
-                >
-                  <DeleteIcon />
-                </IconButton> */}
-              {/* <button
-                  onClick={() => {
-                    swal(
-                      "Are you sure ?",
-                      "Before Deleting Event",
-                      undefined,
-                      ["No", "Yes"],
-                      () => handleDelete(item.id)
-                    );
-                  }}
-                  className="btn btn-outline-danger p-1 mr-1"
-                >
-                  Delete
-                </button>
-                <button
-                  onClick={() =>
-                    history.push({ pathname: "UpdateEvent", EventData: item })
-                  }
-                  className="btn btn-outline-info p-1"
-                >
-                  Update
-                </button>
-              </ListItemSecondaryAction> */}
+          
             </div>
           ))}
         </div>

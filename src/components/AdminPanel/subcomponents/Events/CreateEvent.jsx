@@ -21,8 +21,8 @@ const list = [
     Display: "Event Name",
   },
   {
-    name: "event_link",
-    Display: "Event Link",
+    name: "description",
+    Display: "Event Description",
   },
   {
     name: "event_venue",
@@ -35,7 +35,7 @@ function CreateEvent() {
   let EventData = history.location.EventData;
   const [data, setData] = useState({
     event_name: EventData ? EventData.event_name : "",
-    event_link: EventData ? EventData.event_link : "",
+    description: EventData ? EventData.description : "",
     event_date: EventData ? new Date(EventData.event_date) : new Date(),
     event_time: EventData ? EventData.event_time : "10:00",
     event_venue: EventData ? EventData.event_venue : "",
@@ -168,7 +168,7 @@ function CreateEvent() {
                       src={files}
                       alt="Event pic"
                       className="d-block img-fluid mx-auto"
-                      style={{ maxHeight: "400px" }}
+                      style={{ maxHeight: "250px" }}
                     />
                   </Col>
                   <button
