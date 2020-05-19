@@ -81,7 +81,7 @@ function CreateNotice() {
                   id="standard-full-width"
                   label={item.Display}
                   variant={"outlined"}
-                  style={{ margin: 8 }}
+                  className="mt-3 mx-0"
                   placeholder={`Enter ${item.Display}`}
                   fullWidth
                   margin="normal"
