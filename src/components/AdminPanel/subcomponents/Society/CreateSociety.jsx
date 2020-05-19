@@ -5,7 +5,7 @@ import TimePicker from "react-time-picker";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "@material-ui/core/Button";
-import { AxiosPost,AxiosPut } from "../../../Common/Axios";
+import { AxiosPost, AxiosPut } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
@@ -19,10 +19,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import DragAndDrop from "../../../Common/DragAndDrop";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import Modal from "react-bootstrap/Modal";
 import CancelIcon from "@material-ui/icons/Cancel";
+import Quill from "../../../Common/ReactQuill";
 
 const list = [
   {
@@ -42,36 +41,6 @@ const list = [
     name: "student_incharge",
     Display: "Student Incharge",
   },
-];
-
-//modules and formats for react quill
-let modules = {
-  toolbar: [
-    [{ header: [1, 2, false] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-    ],
-    ["link", "image"],
-    ["clean"],
-  ],
-};
-
-let formats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
 ];
 
 function CreateSociety() {
@@ -124,8 +93,7 @@ function CreateSociety() {
         if (file.type.slice(0, 5) !== "image") {
           swal("File should be image", "Try again", "warning");
           return;
-        }
-        else{
+        } else {
           setFiles(file);
           setSuccess(true);
         }
@@ -147,8 +115,7 @@ function CreateSociety() {
     formdata.append("is_active", JSON.stringify(data.is_active));
     if (files) formdata.append("logo", files);
     // else formdata.append("image_url", "");
-if(Soc_Data)
-formdata.append("society_id",Soc_Data.id)
+    if (Soc_Data) formdata.append("society_id", Soc_Data.id);
     console.log(data);
     for (var pair of formdata.entries()) {
       console.log(pair[0], pair[1]);
@@ -167,44 +134,42 @@ formdata.append("society_id",Soc_Data.id)
       setLoader(false);
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
-    if(Soc_Data)
-    AxiosPut("/api/v1/society-list", formdata, handleSuccess, handleError);
+    if (Soc_Data)
+      AxiosPut("/api/v1/society-list", formdata, handleSuccess, handleError);
     else
-    AxiosPost("/api/v1/society-list", formdata, handleSuccess, handleError);
+      AxiosPost("/api/v1/society-list", formdata, handleSuccess, handleError);
   }
   function handleCarouselFiles(NewFiles, setSuccess) {
     console.log(NewFiles);
 
     if (NewFiles)
-    if (NewFiles.length === 1) {
-      let file = NewFiles[0];
-      console.log(file);
+      if (NewFiles.length === 1) {
+        let file = NewFiles[0];
+        console.log(file);
 
-      if (file.type.slice(0, 5) !== "image") {
-        swal("File should be image", "Try again", "warning");
-        return;
-      }
-      
-      setCaroFiles(file)
+        if (file.type.slice(0, 5) !== "image") {
+          swal("File should be image", "Try again", "warning");
+          return;
+        }
+
+        setCaroFiles(file);
         setSuccess(true);
-      
-    } else if (NewFiles.length > 1) {
-      swal("Please Select One File", "Try again", "warning");
-    }
-      // if (NewFiles.length >= 1) {
-      //   Array.from(NewFiles).forEach((file) => {
-      //     if (file.type.slice(0, 5) !== "image") {
-      //       swal("File should be image", "Try again", "warning");
-      //       return;
-      //     }
-      //     console.log(file);
-      //   });
+      } else if (NewFiles.length > 1) {
+        swal("Please Select One File", "Try again", "warning");
+      }
+    // if (NewFiles.length >= 1) {
+    //   Array.from(NewFiles).forEach((file) => {
+    //     if (file.type.slice(0, 5) !== "image") {
+    //       swal("File should be image", "Try again", "warning");
+    //       return;
+    //     }
+    //     console.log(file);
+    //   });
 
-       
-        // if (carousel_files.length >= 1)
-        //   setCaroFiles([...carousel_files, ...NewFiles]);
-        // else setCaroFiles([...NewFiles]);
-      //}
+    // if (carousel_files.length >= 1)
+    //   setCaroFiles([...carousel_files, ...NewFiles]);
+    // else setCaroFiles([...NewFiles]);
+    //}
     console.log(NewFiles.length);
   }
 
@@ -227,16 +192,15 @@ formdata.append("society_id",Soc_Data.id)
     // console.log(newImage_Arr);
     let formdata = new FormData();
     formdata.append("society_id", Soc_Data.id);
-    if(carousel_files)
-    formdata.append("image", carousel_files);
-    formdata.append("image_url",JSON.stringify(img_carousel));
+    if (carousel_files) formdata.append("image", carousel_files);
+    formdata.append("image_url", JSON.stringify(img_carousel));
 
     setLoader(true);
     function handleSuccess(res) {
       console.log(res);
       setLoader(false);
       swal("Successfully Added", undefined, "success");
-      openModal(false)
+      openModal(false);
       //history.push("");
     }
     function handleError(err) {
@@ -338,11 +302,11 @@ formdata.append("society_id",Soc_Data.id)
                     }
                     onClick={() => setDnd(!showDnD)}
                   >
-                    {showDnD ? "Cancel" : (Soc_Data?"Change Logo":"Add Logo")}
+                    {showDnD ? "Cancel" : Soc_Data ? "Change Logo" : "Add Logo"}
                   </button>
                 </Col>
-                {Soc_Data && !files &&  
-                <Col sm="12" className="mt-2">
+                {Soc_Data && !files && (
+                  <Col sm="12" className="mt-2">
                     <img
                       src={Soc_Data.logo}
                       className="d-block img-fluid mx-auto"
@@ -350,7 +314,7 @@ formdata.append("society_id",Soc_Data.id)
                       style={{ maxHeight: "150px" }}
                     />
                   </Col>
-                }
+                )}
               </Row>
               {files && files.name && (
                 <Row className="mt-4 ">
@@ -393,19 +357,15 @@ formdata.append("society_id",Soc_Data.id)
                   />
                 </div>
               )}
-              
 
               <div className="mt-1 mb-3">
                 <div>
                   <label className="text-secondary">Society Description:</label>
                 </div>
 
-                <ReactQuill
-                  modules={modules}
-                  formats={formats}
-                  theme="snow"
+                <Quill
                   value={data.description}
-                  onChange={(val) => setData({ ...data, description: val })}
+                  handleChange={(val) => setData({ ...data, description: val })}
                 />
               </div>
 
@@ -454,16 +414,18 @@ formdata.append("society_id",Soc_Data.id)
 
       {Soc_Data && (
         <Modal size="lg" className="Carouselmodal" show={modal}>
-        <Loader active={loader}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add Carousel Photos</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div>
-              <span><strong>Current Carousel Photos</strong></span>
-              <div className="d-flex flex-row overflow-auto my-2">
-                {img_carousel.length > 0
-                  ? img_carousel.map((image, index) => (
+          <Loader active={loader}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Carousel Photos</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div>
+                <span>
+                  <strong>Current Carousel Photos</strong>
+                </span>
+                <div className="d-flex flex-row overflow-auto my-2">
+                  {img_carousel.length > 0 ? (
+                    img_carousel.map((image, index) => (
                       <div key={index} className="position-relative">
                         <img
                           src={image}
@@ -485,14 +447,19 @@ formdata.append("society_id",Soc_Data.id)
                         </div>
                       </div>
                     ))
-                  :<p className="mx-auto text-secondary font-smaller">No Image found.Please Upload </p> }
+                  ) : (
+                    <p className="mx-auto text-secondary font-smaller">
+                      No Image found.Please Upload{" "}
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-            <div>
-              <span><strong>Uploaded Photos</strong></span>
-              <div className="d-flex flex-row overflow-auto my-2 justify-content-center">
-                {carousel_files &&
-                  (
+              <div>
+                <span>
+                  <strong>Uploaded Photos</strong>
+                </span>
+                <div className="d-flex flex-row overflow-auto my-2 justify-content-center">
+                  {carousel_files && (
                     <div className="position-relative">
                       <img
                         src={URL.createObjectURL(carousel_files)}
@@ -506,29 +473,28 @@ formdata.append("society_id",Soc_Data.id)
                       </div>
                     </div>
                   )}
+                </div>
+                <div style={{ width: "80%" }} className="mx-auto">
+                  <DragAndDrop
+                    inputProps={{
+                      // multiple: true,
+                      accept: "image/*,.png,.jpg,.jpeg",
+                    }}
+                    handleFileCheck={handleCarouselFiles}
+                    files={carousel_files}
+                  />
+                </div>
               </div>
-              <div style={{width:'80%'}} className="mx-auto">
-
-              <DragAndDrop
-                inputProps={{
-                  // multiple: true,
-                  accept: "image/*,.png,.jpg,.jpeg",
-                }}
-                handleFileCheck={handleCarouselFiles}
-                files={carousel_files}
-              />
-              </div>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => openModal(false)}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={() => handleSubmitCaro()}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Loader>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => openModal(false)}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={() => handleSubmitCaro()}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Loader>
         </Modal>
       )}
     </div>
@@ -550,4 +516,4 @@ export default CreateSociety;
 //       <CancelIcon />
 //     </div>
 //   </div>
-// )) 
+// ))
