@@ -5,22 +5,19 @@ import TimePicker from "react-time-picker";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "@material-ui/core/Button";
-import { AxiosPost,AxiosPut } from "../../../Common/Axios";
+import { AxiosPost, AxiosPut } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import ClearIcon from "@material-ui/icons/Clear";
 import Icon from "@material-ui/core/Icon";
+import Quill from "../../../Common/ReactQuill";
 
 const list = [
   {
     name: "notice",
     Display: "Notice",
-  },
-  {
-    name: "description",
-    Display: "Description",
   },
 ];
 function CreateNotice() {
@@ -40,7 +37,7 @@ function CreateNotice() {
         notice: Notice_Data.notice,
         description: Notice_Data.description,
       });
-      setShowForm(true)
+      setShowForm(true);
     }
   }, []);
   function handleChange(e) {
@@ -63,10 +60,14 @@ function CreateNotice() {
       setLoader(false);
       swal("Something Went Wrong! Try Again", undefined, "error");
     }
-    if(Notice_Data)
-    AxiosPut("/api/v1/notice-list", {...data,notice_id:Notice_Data.id}, handleSuccess, handleError);
-    else
-    AxiosPost("/api/v1/notice-list", data, handleSuccess, handleError);
+    if (Notice_Data)
+      AxiosPut(
+        "/api/v1/notice-list",
+        { ...data, notice_id: Notice_Data.id },
+        handleSuccess,
+        handleError
+      );
+    else AxiosPost("/api/v1/notice-list", data, handleSuccess, handleError);
   }
   return (
     <div className="mt-3">
@@ -94,7 +95,15 @@ function CreateNotice() {
                   value={data[item.name]}
                 />
               ))}
-
+              <div className="mt-1 mb-3">
+              <div>
+                  <label className="text-secondary">Notice Description:</label>
+                </div>
+                <Quill
+                  value={data.description}
+                  handleChange={(val) => setData({ ...data, description: val })}
+                />
+              </div>
               <Row className="justify-content-end mt-2">
                 <Button
                   className="d-block mr-2"
@@ -102,7 +111,7 @@ function CreateNotice() {
                   color="primary"
                   type="submit"
                 >
-                  {Notice_Data?"Update Notice":"Add Notice"}
+                  {Notice_Data ? "Update Notice" : "Add Notice"}
                 </Button>
               </Row>
             </form>
@@ -110,20 +119,22 @@ function CreateNotice() {
         </Loader>
       )}
 
-      {!Notice_Data && <Row className=" mt-3">
-        <Col className="col-auto">
-          <Button
-            className="d-block mr-2"
-            variant="contained"
-            color={!showForm ? "primary" : "secondary"}
-            type="submit"
-            //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
-            onClick={() => setShowForm(!showForm)}
-          >
-            {!showForm ? "Create Notice" : "Cancel"}
-          </Button>
-        </Col>
-      </Row>}
+      {!Notice_Data && (
+        <Row className=" mt-3">
+          <Col className="col-auto">
+            <Button
+              className="d-block mr-2"
+              variant="contained"
+              color={!showForm ? "primary" : "secondary"}
+              type="submit"
+              //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
+              onClick={() => setShowForm(!showForm)}
+            >
+              {!showForm ? "Create Notice" : "Cancel"}
+            </Button>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 }

@@ -92,7 +92,7 @@ function CurrentEvents() {
               <div>{item.event_name}</div>
 
               <div className="DragBarContainer" style={bgStyle}>
-                <div class="Arrowcircle">
+                <div className="Arrowcircle">
                   <ArrowBackIosIcon className="circle_arr" />
                 </div>
                 <button

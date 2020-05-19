@@ -69,7 +69,7 @@ const [showSuccess,setSuccess]=useState(false)
             }}
           />
 
-          <label className="Droplabel" for="Dropfile">
+          <label className="Droplabel" htmlFor="Dropfile">
             Choose a file
           </label>
           <span> or Drag file</span>

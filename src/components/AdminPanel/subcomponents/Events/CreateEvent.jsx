@@ -14,15 +14,11 @@ import ClearIcon from "@material-ui/icons/Clear";
 import Icon from "@material-ui/core/Icon";
 import DragAndDrop from "../../../Common/DragAndDrop";
 import CancelIcon from "@material-ui/icons/Cancel";
-
+import Quill from '../../../Common/ReactQuill'
 const list = [
   {
     name: "event_name",
     Display: "Event Name",
-  },
-  {
-    name: "description",
-    Display: "Event Description",
   },
   {
     name: "event_venue",
@@ -139,6 +135,16 @@ function CreateEvent() {
                   value={data[item.name]}
                 />
               ))}
+              <div className="mt-1 mb-3">
+              <div>
+                  <label className="text-secondary">Event Description:</label>
+                </div>
+                <Quill
+                  value={data.description}
+                  handleChange={(val) => setData({ ...data, description: val })}
+                />
+              </div>
+
               <Row className="mx-1">
                 <Col>
                   <label className="text-secondary mr-1"> Event Date:</label>
