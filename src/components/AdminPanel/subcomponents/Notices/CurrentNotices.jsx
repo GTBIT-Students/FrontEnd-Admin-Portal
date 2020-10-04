@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { AxiosGet, AxiosDelete } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import Typography from "@material-ui/core/Typography";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
+// import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+// import DeleteIcon from "@material-ui/icons/Delete";
+// import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
 import LastTenNotices from "./LastTenNotices";
-import Divider from "@material-ui/core/Divider";
+// import Divider from "@material-ui/core/Divider";
 import "../../../Common/commonStyle.css";
 
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 
-const bgStyle={
-  background:"linear-gradient(to top, #0ba360 0%, #3cba92 100%)",
-}
+const bgStyle = {
+  background: "linear-gradient(to top, #0ba360 0%, #3cba92 100%)",
+};
 
 function CurrentNotices() {
   let history = useHistory();
@@ -56,6 +52,7 @@ function CurrentNotices() {
       let temp = data.slice(0, 5);
       setData(temp);
     }
+    // eslint-disable-next-line
   }, [moreBtn]);
 
   function handleDelete(id) {
@@ -80,7 +77,7 @@ function CurrentNotices() {
   }
   return (
     <div className="mt-4">
-      <Loader active={loader} >
+      <Loader active={loader}>
         <Typography color="textSecondary" gutterBottom>
           Current Notices
         </Typography>
@@ -89,7 +86,7 @@ function CurrentNotices() {
             <div key={item.id} className="CurrentDataContainer">
               <RadioButtonUncheckedIcon
                 className="mx-3"
-                style={{ color: "blueviolet",fontSize:'.9rem' }}
+                style={{ color: "blueviolet", fontSize: ".9rem" }}
               />
 
               <div>{item.notice}</div>

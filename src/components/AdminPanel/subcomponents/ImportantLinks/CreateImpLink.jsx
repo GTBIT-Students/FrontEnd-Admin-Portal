@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import DatePicker from "react-date-picker";
-import TimePicker from "react-time-picker";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "@material-ui/core/Button";
@@ -9,9 +7,6 @@ import { AxiosPost } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import ClearIcon from '@material-ui/icons/Clear';
-import Icon from '@material-ui/core/Icon';
 
 const list = [
   {
@@ -22,7 +17,6 @@ const list = [
     name: "link",
     Display: "Link",
   },
-  
 ];
 function CreateImpLink() {
   let history = useHistory();
@@ -81,7 +75,7 @@ function CreateImpLink() {
                   value={data[item.name]}
                 />
               ))}
-             
+
               <Row className="justify-content-end mt-2">
                 <Button
                   className="d-block mr-2"
@@ -95,23 +89,22 @@ function CreateImpLink() {
             </form>
           </div>
         </Loader>
-      ) }
-       
-          <Row className=" mt-3">
-          <Col className="col-auto">
+      )}
 
-            <Button
-              className="d-block mr-2"
-              variant="contained"
-              color={!showForm?"primary":"secondary"}
-              type="submit"
-              //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
-              onClick={()=>setShowForm(!showForm)}
-            >
-              {!showForm?'Create Link':'Cancel'}
-            </Button>
-          </Col>
-          </Row>
+      <Row className=" mt-3">
+        <Col className="col-auto">
+          <Button
+            className="d-block mr-2"
+            variant="contained"
+            color={!showForm ? "primary" : "secondary"}
+            type="submit"
+            //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
+            onClick={() => setShowForm(!showForm)}
+          >
+            {!showForm ? "Create Link" : "Cancel"}
+          </Button>
+        </Col>
+      </Row>
     </div>
   );
 }

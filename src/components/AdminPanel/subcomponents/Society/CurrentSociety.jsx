@@ -38,6 +38,7 @@ function CurrentSociety() {
       let temp = data.slice(0, 5);
       setData(temp);
     }
+    // eslint-disable-next-line
   }, [moreBtn]);
   function handleDelete(id) {
     setLoader(true);

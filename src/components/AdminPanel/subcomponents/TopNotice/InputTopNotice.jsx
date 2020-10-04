@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
 import Loader from "../../../Common/Loader";
-import domainurl from "../../../Common/Domain";
 import swalAlert from "../../../Common/SwalAlert";
 import Divider from "@material-ui/core/Divider";
 import { AxiosPost } from "../../../Common/Axios";

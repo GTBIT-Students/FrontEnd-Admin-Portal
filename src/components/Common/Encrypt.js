@@ -25,12 +25,10 @@ const encrypt = cipher("@35#456"); // Salt = "R@G|-|@v"
 const decrypt = decipher("@35#456"); // Salt = "R@G|-|@v"
 
 function EncryptToken(token) {
- // console.log("token passed for encry:", token);
   return encrypt(token);
 }
 
 function DecryptToken(token) {
- // console.log("token passed for decry:", token);
   return decrypt(token);
 }
 export { EncryptToken, DecryptToken };

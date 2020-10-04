@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
@@ -9,12 +9,9 @@ import { AxiosPost, AxiosPut } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import ClearIcon from "@material-ui/icons/Clear";
-import Icon from "@material-ui/core/Icon";
 import DragAndDrop from "../../../Common/DragAndDrop";
 import CancelIcon from "@material-ui/icons/Cancel";
-import Quill from '../../../Common/ReactQuill'
+import Quill from "../../../Common/ReactQuill";
 const list = [
   {
     name: "event_name",
@@ -40,11 +37,6 @@ function CreateEvent() {
   const [showForm, setShowForm] = useState(EventData ? true : false);
   const [files, setFiles] = useState(EventData ? EventData.event_image : "");
 
-  useEffect(() => {
-    if (EventData) {
-      console.log("eventdata exist", EventData);
-    }
-  }, []);
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -136,7 +128,7 @@ function CreateEvent() {
                 />
               ))}
               <div className="mt-1 mb-3">
-              <div>
+                <div>
                   <label className="text-secondary">Event Description:</label>
                 </div>
                 <Quill
@@ -293,7 +285,6 @@ function CreateEvent() {
               className="d-block mr-2"
               variant="contained"
               color={!showForm ? "primary" : "secondary"}
-              //endIcon={!showForm?<AddBoxIcon/>:<ClearIcon/>}
               onClick={() => setShowForm(!showForm)}
             >
               {!showForm ? "Create Event" : "Cancel"}

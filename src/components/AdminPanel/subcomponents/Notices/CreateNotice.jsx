@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
-import DatePicker from "react-date-picker";
-import TimePicker from "react-time-picker";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "@material-ui/core/Button";
@@ -9,9 +7,6 @@ import { AxiosPost, AxiosPut } from "../../../Common/Axios";
 import Loader from "../../../Common/Loader";
 import swal from "../../../Common/SwalAlert";
 import { useHistory } from "react-router-dom";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import ClearIcon from "@material-ui/icons/Clear";
-import Icon from "@material-ui/core/Icon";
 import Quill from "../../../Common/ReactQuill";
 
 const list = [
@@ -39,6 +34,7 @@ function CreateNotice() {
       });
       setShowForm(true);
     }
+    // eslint-disable-next-line
   }, []);
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -96,7 +92,7 @@ function CreateNotice() {
                 />
               ))}
               <div className="mt-1 mb-3">
-              <div>
+                <div>
                   <label className="text-secondary">Notice Description:</label>
                 </div>
                 <Quill

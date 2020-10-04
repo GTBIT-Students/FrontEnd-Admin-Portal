@@ -1,5 +1,6 @@
 import React from "react";
 //Don't remove AppBar
+// eslint-disable-next-line
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useStyles from "./AdminPanelStyle";
@@ -8,7 +9,6 @@ import {
   Switch,
   useRouteMatch,
   Route,
-  Link,
 } from "react-router-dom";
 import SideBar from "./SideBar";
 //stylesProvider inject our custom css first on a wrap component
@@ -32,18 +32,19 @@ const cards = [
         style={{ width: "4rem", height: "4rem" }}
       />
     ),
-    LinkTo:'UpdateTopNotice'
+    LinkTo: "UpdateTopNotice",
   },
   {
     heading: "Carousel",
-    bgcolor: "radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%)",
+    bgcolor:
+      "radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%)",
     icon: (
       <ViewCarouselIcon
         className="d-block"
         style={{ width: "4rem", height: "4rem" }}
       />
     ),
-    LinkTo:"Carousel"
+    LinkTo: "Carousel",
   },
   {
     heading: "Notices/Alerts",
@@ -54,7 +55,7 @@ const cards = [
         style={{ width: "4rem", height: "4rem" }}
       />
     ),
-    LinkTo:"Notices"
+    LinkTo: "Notices",
   },
   {
     heading: "Important Links",
@@ -62,7 +63,7 @@ const cards = [
     icon: (
       <LinkIcon className="d-block" style={{ width: "4rem", height: "4rem" }} />
     ),
-    LinkTo:"ImportantLinks"
+    LinkTo: "ImportantLinks",
   },
   {
     heading: "Events",
@@ -73,7 +74,7 @@ const cards = [
         style={{ width: "4rem", height: "4rem" }}
       />
     ),
-    LinkTo:"Events"
+    LinkTo: "Events",
   },
 ];
 function AdminPanel(props) {
@@ -93,7 +94,7 @@ function AdminPanel(props) {
             <Switch>
               <Route exact path={path}>
                 <Row>
-                  {cards.map((card,index) => (
+                  {cards.map((card, index) => (
                     <Col
                       xs={"12"}
                       sm={"6"}

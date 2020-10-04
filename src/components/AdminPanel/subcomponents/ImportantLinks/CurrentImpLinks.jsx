@@ -12,18 +12,15 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import swal from "../../../Common/SwalAlert";
-import {useHistory} from 'react-router-dom'
-import LastTenLinks from "./LastTenLinks";
-import Divider from "@material-ui/core/Divider";
+import { useHistory } from "react-router-dom";
 
 function CurrentImpLinks() {
-  let history=useHistory();
+  let history = useHistory();
 
   const [data, setData] = useState([]);
   const [MoreData, setMoreData] = useState([]);
   const [loader, setLoader] = useState(true);
-  const [moreBtn,setMoreBtn]=useState(true)
-  const [lastTenLinks,setLastTen]=useState([])
+  const [moreBtn, setMoreBtn] = useState(true);
 
   useEffect(() => {
     function handleSuccess(res) {
@@ -35,23 +32,23 @@ function CurrentImpLinks() {
         setData(temp);
         setMoreData(res.data.current_links.slice(5));
       } else setData(res.data.current_links);
-
-      setLastTen(res.data.previous_links)
     }
 
-    AxiosGet("/api/v1/important-link-list", handleSuccess, (err) => console.log(err));
+    AxiosGet("/api/v1/important-link-list", handleSuccess, (err) =>
+      console.log(err)
+    );
+    // eslint-disable-next-line
   }, []);
-useEffect(()=>{
-if(moreBtn===false){
-  let temp=[...data,...MoreData]
-  setData(temp)
-}
-else
-{
-  let temp=data.slice(0,5)
-  setData(temp)
-}
-},[moreBtn])
+  useEffect(() => {
+    if (moreBtn === false) {
+      let temp = [...data, ...MoreData];
+      setData(temp);
+    } else {
+      let temp = data.slice(0, 5);
+      setData(temp);
+    }
+    // eslint-disable-next-line
+  }, [moreBtn]);
   function handleDelete(id) {
     setLoader(true);
     let body = {
@@ -61,8 +58,8 @@ else
       console.log(res);
       setLoader(false);
       swal("Deleted Successfully", undefined, "success");
-      history.push('/')
-      history.push('/admin/ImportantLinks')
+      history.push("/");
+      history.push("/admin/ImportantLinks");
     }
 
     function handleErr(err) {
@@ -84,16 +81,19 @@ else
               <ListItemIcon style={{ color: "blueviolet", minWidth: "35px" }}>
                 <RadioButtonUncheckedIcon fontSize={"small"} />
               </ListItemIcon>
-              <ListItemText
-                primary={item.link_text}
-                secondary={item.link}
-              />
+              <ListItemText primary={item.link_text} secondary={item.link} />
               <ListItemSecondaryAction>
                 <IconButton
                   edge="end"
                   aria-label="delete"
                   onClick={() => {
-                    swal("Delete","Are you sure ?",undefined,["No","Yes"],()=>handleDelete(item.id))
+                    swal(
+                      "Delete",
+                      "Are you sure ?",
+                      undefined,
+                      ["No", "Yes"],
+                      () => handleDelete(item.id)
+                    );
                   }}
                 >
                   <DeleteIcon />
@@ -101,7 +101,6 @@ else
               </ListItemSecondaryAction>
             </ListItem>
           ))}
-
         </List>
         <div>
           {MoreData.length > 0 && (
@@ -109,16 +108,13 @@ else
               variant="outlined"
               color="primary"
               className="m-auto d-block text-info"
-              onClick={()=>setMoreBtn(!moreBtn)}
+              onClick={() => setMoreBtn(!moreBtn)}
             >
-             {moreBtn?"Show More Links":'Show Less Links'}
+              {moreBtn ? "Show More Links" : "Show Less Links"}
             </Button>
           )}
         </div>
       </Loader>
-
-     
-      {/* <LastTenLinks data={lastTenLinks} /> */}
     </div>
   );
 }

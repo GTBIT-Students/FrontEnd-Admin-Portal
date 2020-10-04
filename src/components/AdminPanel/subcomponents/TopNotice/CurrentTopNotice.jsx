@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import Loader from "../../../Common/Loader";
-import domainurl from "../../../Common/Domain";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "@material-ui/core/Button";
@@ -32,28 +30,9 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
         refresh
       );
     }
-    AxiosDelete("/api/v1/upper-notice",{}, handleSuccess);
-    // const options={
-    //   headers:{
-    //     Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
-    //   }
-    // }
-    // axios
-    //   .delete(`${domainurl}/api/v1/upper-notice`,options)
-    //   .then((res) => {
-    //     console.log(res);
-    //     if (res.status === 200) {
-
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
+    AxiosDelete("/api/v1/upper-notice", {}, handleSuccess);
   }
   useEffect(() => {
-    const options = {
-      headers: {
-        Authorization: "Token 5292645558db342649f9c41b50edd7db560962d2",
-      },
-    };
     function handleSuccess(res) {
       console.log(res);
       console.log(res.data.current_notice[0].notice);
@@ -75,6 +54,7 @@ function CurrentTopNotice({ setLastTen, handleInput, showinput, refresh }) {
       );
     }
     AxiosGet("/api/v1/upper-notice", handleSuccess, handleErr);
+    // eslint-disable-next-line
   }, []);
   return (
     <div className="my-3">
