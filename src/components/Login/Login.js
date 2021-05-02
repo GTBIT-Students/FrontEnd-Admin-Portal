@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
-import style from "./login.module.css";
-import { Card, Row, Col, Container } from "react-bootstrap";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
-import { AxiosPost } from "../Common/Axios";
-import { EncryptToken, DecryptToken } from "../Common/Encrypt";
-import { Link } from "react-router-dom";
-import Loader from "../Common/Loader";
-import swal from "sweetalert";
-import Skeleton from "@material-ui/lab/Skeleton";
+import React, { useState, useEffect } from 'react';
+import style from './login.module.css';
+import { Card, Row, Col, Container } from 'react-bootstrap';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
+import { AxiosPost } from '../Common/Axios';
+import { EncryptToken, DecryptToken } from '../Common/Encrypt';
+import { Link } from 'react-router-dom';
+import Loader from '../Common/Loader';
+import swal from 'sweetalert';
+import Skeleton from '@material-ui/lab/Skeleton';
+import '../Common/default.css';
 
 function Login() {
-  document.body.style.background = "rgb(244,245,246)";
+  document.body.style.background = 'rgb(244,245,246)';
   const [data, setData] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
     checked: false,
   });
   const [loading, setLoading] = useState(false);
@@ -24,19 +25,19 @@ function Login() {
 
   useEffect(() => {
     async function fetchData() {
-      if (typeof Storage !== "undefined") {
-        if (localStorage.getItem("uname") && localStorage.getItem("pass")) {
-          let uname = await DecryptToken(localStorage.getItem("uname"));
-          let pass = await DecryptToken(localStorage.getItem("pass"));
+      if (typeof Storage !== 'undefined') {
+        if (localStorage.getItem('uname') && localStorage.getItem('pass')) {
+          let uname = await DecryptToken(localStorage.getItem('uname'));
+          let pass = await DecryptToken(localStorage.getItem('pass'));
           let token = document.cookie.match(
-            "(^|[^;]+)\\s* token \\s*=\\s*([^;]+)"
+            '(^|[^;]+)\\s* token \\s*=\\s*([^;]+)'
           );
           if (token) token = token.pop();
           let body = { username: uname, password: pass };
           console.log(body);
           setData({ username: uname });
           if (uname && pass && token)
-            AxiosPost("/api/v1/token/authorize", body, handleSuccess, () => {
+            AxiosPost('/api/v1/token/authorize', body, handleSuccess, () => {
               setShowLogin(true);
             });
           else setShowLogin(true);
@@ -55,15 +56,15 @@ function Login() {
   function handleChange(e) {
     let name = e.target.name;
     let value;
-    if (name === "checked") value = e.target.checked;
+    if (name === 'checked') value = e.target.checked;
     else value = e.target.value;
 
     setData({ ...data, [name]: value });
   }
   async function saveToLocalStorage() {
-    console.log("checked");
-    localStorage.setItem("uname", await EncryptToken(data.username));
-    localStorage.setItem("pass", await EncryptToken(data.password));
+    console.log('checked');
+    localStorage.setItem('uname', await EncryptToken(data.username));
+    localStorage.setItem('pass', await EncryptToken(data.password));
   }
 
   async function handleSuccess(res) {
@@ -72,13 +73,13 @@ function Login() {
       document.cookie = `token=${encryptedToken};`;
       // history.push("/admin");
       if (data.checked) saveToLocalStorage();
-      else console.log("not checked");
-      window.location.pathname = "/admin";
+      else console.log('not checked');
+      window.location.pathname = '/admin';
       setLoading(false);
     }
   }
   async function handleErr(err) {
-    swal("Authentication Failed", "", "error");
+    swal('Authentication Failed', '', 'error');
     setLoading(false);
   }
 
@@ -86,33 +87,34 @@ function Login() {
     e.preventDefault();
     setLoading(true);
 
-    console.log("Login submit called");
+    console.log('Login submit called');
     let body = { ...data, checked: undefined };
-    AxiosPost("/api/v1/token/authorize", body, handleSuccess, handleErr);
+    AxiosPost('/api/v1/token/authorize', body, handleSuccess, handleErr);
   }
 
   return (
     <Container
       style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        padding: "1em 0",
-        boxSizing: "border-box",
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: '1em 0',
+        boxSizing: 'border-box',
       }}
     >
+      <div className="hey">Hey</div>
       <Row>
         <Col>
           <Card
-            style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 5px 16px 0px" }}
-            className={"mx-auto " + style.logincard}
+            style={{ boxShadow: 'rgba(0, 0, 0, 0.05) 0px 5px 16px 0px' }}
+            className={'mx-auto ' + style.logincard}
           >
             {showLogin ? (
               <Loader active={loading}>
                 {/* <Card.Img variant="top" src={Logo} /> */}
                 <Card.Header bg="info" className="text-center">
-                  <span style={{ fontSize: "1.5rem" }}>Sign In</span>
+                  <span style={{ fontSize: '1.5rem' }}>Sign In</span>
                   {/* <AccountCircleIcon style={{fontSize:'2rem'}}/> */}
                 </Card.Header>
                 <Card.Body>
